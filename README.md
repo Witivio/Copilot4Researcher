@@ -1,14 +1,10 @@
-Here’s an updated version of your README with some emojis added for a more engaging and friendly tone:
-
----
-
 # 🚀 Copilot for Researcher - Life Sciences Edition 🌿🔬
 
 Welcome to **Copilot for Researcher**, an intelligent assistant designed to streamline research workflows, with a particular focus on **life sciences**. Our v1 release will debut in **December 2024**, and we’re excited to share how this tool will transform how researchers gather and interact with scientific data.
 
 ## What is Copilot for Researcher? 🤔
 
-Copilot for Researcher is a specialized **Copilot agent** designed for the life sciences community. Powered by **Azure** ☁️, it is built to assist researchers by collecting, analyzing, and organizing data from multiple sources critical to scientific research. This tool is designed to offer both efficiency and flexibility, allowing researchers to focus on their core work while Copilot handles data aggregation and insight generation.
+Copilot for Researcher is a specialized **Copilot agent** designed for the life sciences community. Powered by **Microsoft Azure** ☁️, it is built to assist researchers by collecting, analyzing, and organizing data from multiple sources critical to scientific research. This tool is designed to offer both efficiency and flexibility, allowing researchers to focus on their core work while Copilot handles data aggregation and insight generation.
 
 For more details about Copilot agents, check out the official [Microsoft Copilot documentation](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/overview-declarative-agent).
 
