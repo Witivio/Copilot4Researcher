@@ -1,0 +1,41 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/vDevPreview/MicrosoftTeams.schema.json",
+    "manifestVersion": "devPreview",
+    "version": "1.0.0",
+    "id": "${{TEAMS_APP_ID}}",
+    "developer": {
+        "name": "Witivio",
+        "websiteUrl": "https://www.witivio.com",
+        "privacyUrl": "https://www.witivio.com/en/privacy",
+        "termsOfUseUrl": "https://www.example.com/termofuse",
+        "mpnId": ""
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "name": {
+        "short": "Copilot for Researcher${{APP_NAME_SUFFIX}}",
+        "full": "Full name for Copilot for Researcher"
+    },
+    "description": {
+        "short": "Short description for Copilot for Researcher",
+        "full": "Full description for Copilot for Researcher"
+    },
+    "accentColor": "#FFFFFF",
+    "copilotExtensions": {
+        "declarativeCopilots": [
+            {
+                "id": "declarativeAgent",
+                "file": "declarativeAgent.json"
+            }
+        ]
+    },
+    "permissions": [
+        "identity",
+        "messageTeamMembers"
+    ],
+    "validDomains": [
+        
+    ]
+}

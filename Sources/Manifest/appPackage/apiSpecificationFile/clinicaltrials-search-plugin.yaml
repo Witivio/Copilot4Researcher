@@ -1,0 +1,99 @@
+openapi: 3.0.1
+info:
+  title: Copilot for Reseracher APIs
+  description: An API to search clinical trials
+  version: v1
+servers:
+  - url: https://e1ed1a7105d2.ngrok.app
+    description: Production Server
+paths:
+  /ClinicalTrials/search:
+    get:
+      tags:
+        - ClinicalTrials
+      summary: Search clinical trials
+      operationId: SearchClinicalTrials
+      description: Search for clinical trials using keywords
+      parameters:
+        - name: UserInput
+          in: query
+          description: 'User input as a natural language query, e.g., ''Show latest articles about BRCA1.'''
+          required: true
+          schema:
+            type: string
+            description: 'User input as a natural language query, e.g., ''Show latest articles about BRCA1.'''
+        - name: UserIntent
+          in: query
+          description: 'User''s intent derived from the natural language input, e.g., ''search for recent studies.'''
+          required: true
+          schema:
+            type: string
+            description: 'User''s intent derived from the natural language input, e.g., ''search for recent studies.'''
+        - name: Keywords
+          in: query
+          description: 'Keywords or topics to focus the search on, extracted from the user input, separated by semicolons.'
+          required: true
+          schema:
+            type: string
+            description: 'Keywords or topics to focus the search on, extracted from the user input, separated by semicolons.'
+        - name: NbItems
+          in: query
+          description: Optional. Number of items to return. Default value is 5
+          schema:
+            type: integer
+            description: Optional. Number of items to return. Default value is 5
+            format: int32
+        - name: Conditions
+          in: query
+          description: Optional. Conditions or disease in Essie expression syntax
+          schema:
+            type: string
+            description: Optional. Conditions or disease in Essie expression syntax
+        - name: Intervention
+          in: query
+          description: Optional. Intervention or treatment in Essie expression syntax
+          schema:
+            type: string
+            description: Optional. Intervention or treatment in Essie expression syntax
+        - name: OutcomeMeasure
+          in: query
+          description: Optional. Outcom measure in Essie expression syntax
+          schema:
+            type: string
+            description: Optional. Outcom measure in Essie expression syntax
+        - name: LeadSponsorName
+          in: query
+          description: Optional. Sponsor or collaborator lead in Essie expression syntax
+          schema:
+            type: string
+            description: Optional. Sponsor or collaborator lead in Essie expression syntax
+        - name: Id
+          in: query
+          description: Optional. NCT Number of a study
+          schema:
+            type: string
+            description: Optional. NCT Number of a study
+      responses:
+        '200':
+          description: Returns a list of clinical trials matching the search criteria
+  schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: { }

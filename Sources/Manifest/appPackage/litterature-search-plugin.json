@@ -1,0 +1,144 @@
+{
+    "$schema": "https://aka.ms/json-schemas/copilot/plugin/v2.1/schema.json",
+    "schema_version": "v2.1",
+    "name_for_human": "Litterature",
+    "description_for_human": "An API to search literature",
+    "namespace": "copilotforresearcher",
+    "functions": [
+        {
+            "name": "SearchLiterature",
+            "states": {
+                "responding": {
+                    "instructions": ["You must ALWAYS begin your answer with the 'DOI' value"],
+                    "description": "",
+                    "examples": ""
+                }
+            },
+            "description": "📚 queries life science databases such as PubMed, and other academic journal repositories to retrieve relevant articles, papers, and research studies. It is designed to support users searching for specific genes, proteins, molecular interactions, or any other life science-related queries. The function can return a list of articles, abstracts, or even full-texts where available, with links to the original publications",
+            "capabilities": {
+                "response_semantics": {
+                  "data_path": "$",
+                  "properties": {
+                    "title": "$.title",
+                    "subtitle": "$.DOI",
+                    "url":"$.link",
+                    "thumbnail_url": "$.icon"
+                  },
+                  "static_template": {
+                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                     "version": "1.5",
+                     "type": "AdaptiveCard",
+                     "body": [
+                         {
+                             "type": "TextBlock",
+                             "size": "Medium",
+                             "weight": "Bolder",
+                             "text": "${title}",
+                             "wrap": true
+                         },
+                         {
+                             "type": "FactSet",
+                             "facts": [
+                                 {
+                                     "title": "Authors",
+                                     "value": "${authors.First}, ..., ${authors.Last}"
+                                 },
+                                 {
+                                     "title": "Date",
+                                     "value": "${date}"
+                                 },
+                                 {
+                                     "title": "Citations",
+                                     "$when": "${citations > 0}",
+                                     "value": "${citations}"
+                                 },
+                                 {
+                                     "title": "Journal",
+                                     "value": "${journalName}"
+                                 },
+                                 {
+                                     "title": "Impact factor",
+                                     "$when": "${impactFactor > 0}",
+                                     "value": "${impactFactor}"
+                                 }
+                             ]
+                         },
+                         {
+                             "type": "ActionSet",
+                             "actions": [
+                                 {
+                                     "type": "Action.ShowCard",
+                                     "title": "Abstract",
+                                     "iconUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAAFYAAABWAHfbyrhAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAGxQTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfHZfwQAAACN0Uk5TAAQGBwkKERUXIS0wOTo/SU50fZCWmLvBxNna4uXv8vP1/f44GNoMAAAA+klEQVQ4y4WTyZKCQBBEU0FE2WSz2aSB9///OAcnHMclKi8d0bVXZUoPBEXrBu8H1xaB3hE3Mw/MTfxi3lf+blqW++ur/b/wDlhdmURSlJRuBbqnJOcR6NO/j7QHxvMjfoStDp9ThvUG42+OfQdT/tp0PkF376OCLX8fK9+gkqTYQ/1hbtXgY0kN9OEnh7CHRgpm1lQfka7MgQpw+gIHhVoovzmU0MpBIul02UmSskyStLucJCXgNEAkVSvTUdIVrpKOE2slRTDIs0iHG1BKGUAmlcDtIC1428EsYTZpjmkuyly1eSz73CZhbMqZpLVpbwvHlp4t3u/y/wEDNSwdtLEsJwAAAABJRU5ErkJggg==",
+                                     "card": {
+                                         "type": "AdaptiveCard",
+                                         "body": [
+                                             {
+                                                 "type": "TextBlock",
+                                                 "text": "${abstract}",
+                                                 "wrap": true
+                                             }
+                                         ]
+                                     }
+                                 },
+                                 {
+                                     "type": "Action.OpenUrl",
+                                     "title": "See ${source}",
+                                     "url":"${link}",
+                                     "iconUrl": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPg0KPHN2ZyB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCjxnIGlkPSJJbnRlcmZhY2UgLyBFeHRlcm5hbF9MaW5rIj4NCjxwYXRoIGlkPSJWZWN0b3IiIGQ9Ik0xMC4wMDAyIDVIOC4yMDAyQzcuMDgwMDkgNSA2LjUxOTYyIDUgNi4wOTE4IDUuMjE3OTlDNS43MTU0NyA1LjQwOTczIDUuNDA5NzMgNS43MTU0NyA1LjIxNzk5IDYuMDkxOEM1IDYuNTE5NjIgNSA3LjA4MDA5IDUgOC4yMDAyVjE1LjgwMDJDNSAxNi45MjAzIDUgMTcuNDgwMSA1LjIxNzk5IDE3LjkwNzlDNS40MDk3MyAxOC4yODQyIDUuNzE1NDcgMTguNTkwNSA2LjA5MTggMTguNzgyMkM2LjUxOTIgMTkgNy4wNzg5OSAxOSA4LjE5NjkxIDE5SDE1LjgwMzFDMTYuOTIxIDE5IDE3LjQ4IDE5IDE3LjkwNzQgMTguNzgyMkMxOC4yODM3IDE4LjU5MDUgMTguNTkwNSAxOC4yODM5IDE4Ljc4MjIgMTcuOTA3NkMxOSAxNy40ODAyIDE5IDE2LjkyMSAxOSAxNS44MDMxVjE0TTIwIDlWNE0yMCA0SDE1TTIwIDRMMTMgMTEiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4NCjwvZz4NCjwvc3ZnPg=="
+                                 },
+                                 {
+                                     "type": "Action.ShowCard",
+                                     "title": "Cite",
+                                     "$when": "${source = 'Pubmed'}",
+                                     "iconUrl": "data:image/gif;base64,R0lGODlhIAAgAHAAACH5BAEAACIALAAAAAAgACAAhVVVVRYWFgAAABUVFTExMSIiIllZWVpaWiMjI2lpaVZWVmhoaEJCQiwsLFJSUgUFBR0dHQsLCwMDAyEhIWdnZxgYGGFhYRMTE0lJSXt7ezk5OSoqKjc3Nzo6OisrKyAgIE5OTnh4eAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbnQJFwSCwaj8ikcpkEBATQ6ADARBKgBQPxgIASqsMEVKFUQBdVhqABbggYS7UDLHS8kwvBnF4XoI9rfERuR1eCRQJfiGSHQ2ZFAAJHBQ8QRBAPBYBUQwOaRRFREkISURFGBQNEAlqIUZIir7BEBrOxgK9CsoCrR25RQhO5Rra2RBQVAhVDFhcCCLxDxkQYAhlEGtO6q63EG4gcR7VEnkcdqkQeH0ipRJFHIEUhjJuLjY7ThvexiohsjYSO5NnDx06CJHIK3lGi5h8TN3CYiBFA74gZP3yuCMiypYCXe05kCZiyr6TJJEEAADs=",
+                                     "card": {
+                                         "type": "AdaptiveCard",
+                                         "actions": [
+                                            {
+                                                "type": "Action.OpenUrl",
+                                                "title": ".nbib",
+                                                "url":"https://localhost:7068/literature/Download/${id}/nbib",
+                                                "iconUrl": "data:image/gif;base64,R0lGODlhIAAgAHAAACH5BAEAADgALAAAAAAgACAAhQQEBAEBAVdXV0NDQwAAAAYGBkFBQVZWVmZmZnNzcwMDAwICAiIiIl1dXTQ0NCMjI0JCQiEhIUdHRwsLCygoKA8PDwUFBRISEiAgIIeHhyQkJGFhYR8fH1FRUXZ2dnBwcFRUVHFxcTg4OB4eHl5eXhQUFGJiYnR0dAwMDBcXFwcHBxgYGBYWFhkZGRoaGlVVVR0dHVNTUw4ODhUVFYWFhUREREBAQHh4eAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb2QJxwSCwaj8ikEBAQKJ/HAYFQgFqHhmn1as1SuV0tGOrdjpPlszKtRrLbxjecKD8finVE4qogLOhiQwxTDVYEAYdYgTiDUw5WD1OJOBCBjZNWEZIBOBJTEzgUm2OaUwAVUxYXo2cYklMLiFOcba6vCoi0ShkaG0gcrwQKf0gUHUJ9ukbArEcFUx44kh9JzARKkiDSUyFKIiNP2dsE3XOwJOPlcMIlJuMnc9IoKYV+KuhziCraACUrLBYCChxIsGCKFi6mvMAxgcOIEcEiSpyiYAQMBn1i4CjgAoOMiSBfsYgw4xANITVsGIBgoKXLlzBdDoB5A0cQADs="
+                                            },
+                                            {
+                                                "type": "Action.OpenUrl",
+                                                "title": ".bib",
+                                                "url":"https://localhost:7068/literature/Download/${id}/bibtex",
+                                                "iconUrl": "data:image/gif;base64,R0lGODlhIAAgAHAAACH5BAEAADgALAAAAAAgACAAhQQEBAEBAVdXV0NDQwAAAAYGBkFBQVZWVmZmZnNzcwMDAwICAiIiIl1dXTQ0NCMjI0JCQiEhIUdHRwsLCygoKA8PDwUFBRISEiAgIIeHhyQkJGFhYR8fH1FRUXZ2dnBwcFRUVHFxcTg4OB4eHl5eXhQUFGJiYnR0dAwMDBcXFwcHBxgYGBYWFhkZGRoaGlVVVR0dHVNTUw4ODhUVFYWFhUREREBAQHh4eAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb2QJxwSCwaj8ikEBAQKJ/HAYFQgFqHhmn1as1SuV0tGOrdjpPlszKtRrLbxjecKD8finVE4qogLOhiQwxTDVYEAYdYgTiDUw5WD1OJOBCBjZNWEZIBOBJTEzgUm2OaUwAVUxYXo2cYklMLiFOcba6vCoi0ShkaG0gcrwQKf0gUHUJ9ukbArEcFUx44kh9JzARKkiDSUyFKIiNP2dsE3XOwJOPlcMIlJuMnc9IoKYV+KuhziCraACUrLBYCChxIsGCKFi6mvMAxgcOIEcEiSpyiYAQMBn1i4CjgAoOMiSBfsYgw4xANITVsGIBgoKXLlzBdDoB5A0cQADs="
+                                            }
+                                        ]
+                                     }
+
+                                 }
+                             ]
+                         }
+                     ]
+                  }
+                }
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "OpenApi",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "apiSpecificationFile/litterature-search-plugin.yaml"
+            },
+            "run_for_functions": [
+                "SearchLiterature"
+            ]
+        }
+    ],
+    "capabilities": {
+        "localization": {},
+        "conversation_starters": [
+            {
+                "text": "Search for life science literature"
+            }
+        ]
+    }
+}

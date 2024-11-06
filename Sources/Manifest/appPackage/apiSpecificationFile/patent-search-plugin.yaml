@@ -1,0 +1,181 @@
+openapi: 3.0.1
+info:
+  title: Copilot for Reseracher APIs
+  description: An API to search patents
+  version: v1
+servers:
+  - url: https://e1ed1a7105d2.ngrok.app
+    description: Production Server
+paths:
+  /Patent/Search:
+    get:
+      tags:
+        - Patent
+      summary: Search for patent
+      description: This endpoint allows users to search patent with parameters like keywords, date ranges, and authors. The query interprets user intent, applying filters to return relevant. Users can specify their preferences, such as ''Show latest patent about BRCA1,'' and the system will automatically retrieve the most relevant results.'
+      operationId: SearchPatents
+      parameters:
+        - name: UserInput
+          in: query
+          description: 'User input as a natural language query, e.g., ''Show latest patents about BRCA1.'''
+          required: true
+          schema:
+            type: string
+            description: 'User input as a natural language query, e.g., ''Show latest patents about BRCA1.'''
+        - name: UserIntent
+          in: query
+          description: 'User''s intent derived from the natural language input, e.g., ''search for recent patents.'''
+          required: true
+          schema:
+            type: string
+            description: 'User''s intent derived from the natural language input, e.g., ''search for recent patents.'''
+        - name: Keywords
+          in: query
+          description: 'Keywords or topics to focus the search on, extracted from the user input, separated by semicolons.'
+          required: true
+          schema:
+            type: string
+            description: 'Keywords or topics to focus the search on, extracted from the user input, separated by semicolons.'
+        - name: Countries
+          in: query
+          description: ISO 2 letters name of one or many countries separated by semicolons. Default is empty
+          schema:
+            type: string
+            description: ISO 2 letters name of one or many countries separated by semicolons. Default is empty
+        - name: Language
+          in: query
+          description: 'Language of the patent. Supported value: ENGLISH, GERMAN, CHINESE, FRENCH, SPANISH, ARABIC, JAPANESE, KOREAN, PORTUGUESE, RUSSIAN, ITALIAN, DUTCH, SWEDISH, FINNISH, NORWEGIAN, DANISH. Default is ENGLISH'
+          schema:
+            type: string
+            description: 'Language of the patent. Supported value: ENGLISH, GERMAN, CHINESE, FRENCH, SPANISH, ARABIC, JAPANESE, KOREAN, PORTUGUESE, RUSSIAN, ITALIAN, DUTCH, SWEDISH, FINNISH, NORWEGIAN, DANISH. Default is ENGLISH'
+        - name: BeforePriorityDate
+          in: query
+          description: Optional. Filter to get patent priority before a date. The format is YYYYMMDD
+          schema:
+            type: string
+            description: Optional. Filter to get patent priority before a date. The format is YYYYMMDD
+        - name: BeforeFillingDate
+          in: query
+          description: Optional. Filter to get patent filling before a date. The format is YYYYMMDD
+          schema:
+            type: string
+            description: Optional. Filter to get patent filling before a date. The format is YYYYMMDD
+        - name: BeforePublicationDate
+          in: query
+          description: Optional. Filter to get patent publication before a date. The format is YYYYMMDD
+          schema:
+            type: string
+            description: Optional. Filter to get patent publication before a date. The format is YYYYMMDD
+        - name: AfterPriorityDate
+          in: query
+          description: Optional. Filter to get patent priority after a date. The format is YYYYMMDD
+          schema:
+            type: string
+            description: Optional. Filter to get patent priority after a date. The format is YYYYMMDD
+        - name: AfterFillingDate
+          in: query
+          description: Optional. Filter to get patent filling after a date. The format is YYYYMMDD
+          schema:
+            type: string
+            description: Optional. Filter to get patent filling after a date. The format is YYYYMMDD
+        - name: AfterPublicationDate
+          in: query
+          description: Optional. Filter to get patent publication after a date. The format is YYYYMMDD
+          schema:
+            type: string
+            description: Optional. Filter to get patent publication after a date. The format is YYYYMMDD
+        - name: Inventors
+          in: query
+          description: Optional. Inventors of the patents. Separated by comma.
+          schema:
+            type: string
+            description: Optional. Inventors of the patents. Separated by comma.
+        - name: Assignees
+          in: query
+          description: Optional. Assignees  of the patents. Separated by comma.
+          schema:
+            type: string
+            description: Optional. Assignees  of the patents. Separated by comma.
+        - name: Status
+          in: query
+          description: 'Optional. Filter patent results by status. Supported value: APPLICATION, GRANT'
+          schema:
+            type: string
+            description: 'Optional. Filter patent results by status. Supported value: APPLICATION, GRANT'
+        - name: Type
+          in: query
+          description: 'Optional. Filter patent results by type. Supported value: PATENT, DESIGN'
+          schema:
+            type: string
+            description: 'Optional. Filter patent results by type. Supported value: PATENT, DESIGN'
+        - name: Litigation
+          in: query
+          description: 'Optional. Filter patent results by litigation status. Supported value: YES, NO'
+          schema:
+            type: string
+            description: 'Optional. Filter patent results by litigation status. Supported value: YES, NO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatentCopilotRenderingResultsWrapper'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  components:
+  schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: { }
+    PatentCopilotRenderingResult:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Patent'
+        icon:
+          type: string
+          nullable: true
+        displayTemplate:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PatentCopilotRenderingResultsWrapper:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PatentCopilotRenderingResult'
+          nullable: true
+        templates:
+          $ref: '#/components/schemas/CopilotResultTemplates'
+      additionalProperties: false
+    PatentStatus:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32

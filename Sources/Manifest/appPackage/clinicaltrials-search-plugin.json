@@ -1,0 +1,54 @@
+{
+    "$schema": "https://aka.ms/json-schemas/copilot/plugin/v2.1/schema.json",
+    "schema_version": "v2.1",
+    "name_for_human": "Clinical Trials",
+    "description_for_human": "An API to search clinical trials",
+    "namespace": "copilotforresearcher-clinicaltrials",
+    "functions": [
+        {
+            "name": "SearchClinicalTrials",
+            "states": {
+                "responding": {
+                    "instructions": ["You must only use the summary and the Title"],
+                    "description": "",
+                    "examples": ""
+                }
+            },
+            "description": "📚 queries clinicaltrials.gov to learn about clinical studies from around the world",
+            "capabilities": {
+                "response_semantics": {
+                  "data_path": "$",
+                  "properties": {
+                    "title": "$.title",
+                    "subtitle": "$.nctId",
+                    "url":"$.link",
+                    "template_selector": "$.displayTemplate"
+                  }
+                 
+                }
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "OpenApi",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "apiSpecificationFile/clinicaltrials-search-plugin.yaml"
+            },
+            "run_for_functions": [
+                "SearchClinicalTrials"
+            ]
+        }
+    ],
+    "capabilities": {
+        "localization": {},
+        "conversation_starters": [
+            {
+                "text": "Search for life science literature"
+            }
+        ]
+    }
+}

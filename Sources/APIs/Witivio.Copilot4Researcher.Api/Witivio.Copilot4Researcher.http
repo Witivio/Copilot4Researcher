@@ -1,0 +1,6 @@
+@Witivio.Copilot4Researcher_HostAddress = http://localhost:5121
+
+GET {{Witivio.Copilot4Researcher_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
