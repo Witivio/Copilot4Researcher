@@ -53,8 +53,9 @@ namespace Witivio.Copilot4Researcher.Controllers
             var resultWrapper = new CopilotRenderingResultWrapper<Gene>();
             resultWrapper.Templates = cardTemplates;
             resultWrapper.Result = geneResult;
+            resultWrapper.DisplayTemplate = "$.templates.card";
 
-            return Results.Ok(geneResult);
+            return Results.Ok(resultWrapper);
         }
     }
 

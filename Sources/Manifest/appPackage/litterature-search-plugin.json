@@ -1,7 +1,7 @@
 {
     "$schema": "https://aka.ms/json-schemas/copilot/plugin/v2.1/schema.json",
     "schema_version": "v2.1",
-    "name_for_human": "Litterature",
+    "name_for_human": "Litterature search 🔎",
     "description_for_human": "An API to search literature",
     "namespace": "copilotforresearcher",
     "functions": [
@@ -98,13 +98,13 @@
                                             {
                                                 "type": "Action.OpenUrl",
                                                 "title": ".nbib",
-                                                "url":"https://localhost:7068/literature/Download/${id}/nbib",
+                                                "url":"https://1cd2f98ce805.ngrok.app/literature/Download/${id}/nbib",
                                                 "iconUrl": "data:image/gif;base64,R0lGODlhIAAgAHAAACH5BAEAADgALAAAAAAgACAAhQQEBAEBAVdXV0NDQwAAAAYGBkFBQVZWVmZmZnNzcwMDAwICAiIiIl1dXTQ0NCMjI0JCQiEhIUdHRwsLCygoKA8PDwUFBRISEiAgIIeHhyQkJGFhYR8fH1FRUXZ2dnBwcFRUVHFxcTg4OB4eHl5eXhQUFGJiYnR0dAwMDBcXFwcHBxgYGBYWFhkZGRoaGlVVVR0dHVNTUw4ODhUVFYWFhUREREBAQHh4eAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb2QJxwSCwaj8ikEBAQKJ/HAYFQgFqHhmn1as1SuV0tGOrdjpPlszKtRrLbxjecKD8finVE4qogLOhiQwxTDVYEAYdYgTiDUw5WD1OJOBCBjZNWEZIBOBJTEzgUm2OaUwAVUxYXo2cYklMLiFOcba6vCoi0ShkaG0gcrwQKf0gUHUJ9ukbArEcFUx44kh9JzARKkiDSUyFKIiNP2dsE3XOwJOPlcMIlJuMnc9IoKYV+KuhziCraACUrLBYCChxIsGCKFi6mvMAxgcOIEcEiSpyiYAQMBn1i4CjgAoOMiSBfsYgw4xANITVsGIBgoKXLlzBdDoB5A0cQADs="
                                             },
                                             {
                                                 "type": "Action.OpenUrl",
                                                 "title": ".bib",
-                                                "url":"https://localhost:7068/literature/Download/${id}/bibtex",
+                                                "url":"https://1cd2f98ce805.ngrok.app/literature/Download/${id}/bibtex",
                                                 "iconUrl": "data:image/gif;base64,R0lGODlhIAAgAHAAACH5BAEAADgALAAAAAAgACAAhQQEBAEBAVdXV0NDQwAAAAYGBkFBQVZWVmZmZnNzcwMDAwICAiIiIl1dXTQ0NCMjI0JCQiEhIUdHRwsLCygoKA8PDwUFBRISEiAgIIeHhyQkJGFhYR8fH1FRUXZ2dnBwcFRUVHFxcTg4OB4eHl5eXhQUFGJiYnR0dAwMDBcXFwcHBxgYGBYWFhkZGRoaGlVVVR0dHVNTUw4ODhUVFYWFhUREREBAQHh4eAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb2QJxwSCwaj8ikEBAQKJ/HAYFQgFqHhmn1as1SuV0tGOrdjpPlszKtRrLbxjecKD8finVE4qogLOhiQwxTDVYEAYdYgTiDUw5WD1OJOBCBjZNWEZIBOBJTEzgUm2OaUwAVUxYXo2cYklMLiFOcba6vCoi0ShkaG0gcrwQKf0gUHUJ9ukbArEcFUx44kh9JzARKkiDSUyFKIiNP2dsE3XOwJOPlcMIlJuMnc9IoKYV+KuhziCraACUrLBYCChxIsGCKFi6mvMAxgcOIEcEiSpyiYAQMBn1i4CjgAoOMiSBfsYgw4xANITVsGIBgoKXLlzBdDoB5A0cQADs="
                                             }
                                         ]

@@ -131,14 +131,13 @@ namespace Witivio.Copilot4Researcher.Providers.ProteinAtlas.Cards
                                 IsVisible = false,
                                 Items = new List<AdaptiveElement>
                                 {
-                                    new AdaptiveTextBlock
-                                    {
-                                        Text = $"{expression.Organ}:",
-                                        Wrap = true
-                                    },
                                     new AdaptiveImage
                                     {
-                                        Url = new Uri(expression.ImageUrl)
+                                        Url = new Uri(expression.ImageUrl),
+                                        AdditionalProperties = new SerializableDictionary<string, object>
+                                        {
+                                            { "msTeams",new { allowExpand=true} }
+                                        }   
                                     }
                                 }
                             }

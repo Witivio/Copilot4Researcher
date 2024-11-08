@@ -23,6 +23,8 @@ namespace Witivio.Copilot4Researcher.Providers.ClinicalTrials.Cards
 
         private const string BROWNISH_BG = "data:image/gif;base64,R0lGODlhCAABAHAAACwAAAAACAABAIGZzP8AAAAAAAAAAAACA4RvBQA7";
 
+        private const string CONTACTIcon = "data:image/gif;base64,R0lGODlhIwAgAHAAACH5BAEAAIUALAAAAAAjACAAh2xmZU5GRVdQT4iDg1JLSiUcGjszMVtUVFFKSCYdGyYcGkE5NyohH3RvbSceHH14d4yIiI2JiJaSkSsiIHt2dDUsKyQaGCkgHigeHSUaGTcvLSQaGZWRkFtVU1NMSyUbGiMZFyogHndycW1oZyUbGWZfXjgwLi4lI3BqaUhBP0tDQjAmJIB8e3NubDoxMH55eSIXFpGOjCwjIZGOjSQZGE9JRzAnJYV/fnZxcTYtK46KiUtDQ2JcWz83NTUtK2ljYoJ9fC4kIomEg3l0cyUaGCoiIG9paISAf3Jsa2hjYZCMi4F9e19YV4aDgiQZFzoxL4WBf4uGhjUrKiccGiYbGUY+PY6JiYeDgmlkYzIpJ3p1dF9ZWJiUkzgvLVROTDIqKG5oZygeHGBaWCcdG0M7O1ROTU1FRFZPTjQsKkI6OXFraiwiICshH11XVnp2dJCLioaAf4R+fEA5N2RdXCgdG4yIh0xEQ2BZWEU9PGFZWF9WVV9XVl9XVV5WVWBYWEtDQWJbWklBP0lAP01FQ0tCQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAj/AAsJHEiwoMGDCBMqXMiwIIAAAgY0nCiQQAEDBxAkUECR4QIGBRs46JjwAUeDECJIIGlwAgWDFSxcwJBBA8uBGwpysNCBoIcPNwuBKBhChMERJG5aIFjCBMITKFimUDFwBQuELVwofSEQRsIYMm7OoFGjkI0bCHHkCKpjRyEePRD6+MESSBCnAkkIMTiECMsiFowQPEICCcEkIJR0XGKBycEmIJw8eWIhaUcoTqIcRCHFgoUpVJxYqGKFYoYrBrGQyKLF4JYCGLgw7OLF4JelCsGEEbNwjEEMZCYmKJPQzJmCaNJ0tKAGYYGCKBKw9HvQ8kALiklOPQhizQo2bdxMQwjq2+AbOHDiFJIzJyidOgtP3rRzZyEIPHn06Nezh8/+/3rw0Yceffixxh8LARKIIAwyOAghDUYoIYMRBGXhhRheGBAAOw==";
+
         private static readonly string[] BackgroundsCircle = { GREY_CIRCLE, GREEN_CRICLE, BLUE_CRICLE };
 
         public static AdaptiveCard Render(ClinicalTrial trial)
@@ -113,6 +115,7 @@ namespace Witivio.Copilot4Researcher.Providers.ClinicalTrials.Cards
                 card.Actions.Insert(0, new AdaptiveShowCardAction
                 {
                     Title = "Contacts",
+                    IconUrl = CONTACTIcon,
                     Card = new AdaptiveCard(new AdaptiveSchemaVersion(1, 5))
                     {
                         Body = GenerateContactsColumns(trial.Contacts)
@@ -184,7 +187,8 @@ namespace Witivio.Copilot4Researcher.Providers.ClinicalTrials.Cards
                             {
                                 BackgroundImage = new AdaptiveBackgroundImage
                                 {
-                                    Url = GetRandomPeopleBackground()
+                                    Url = GetRandomPeopleBackground(),
+                                    FillMode = AdaptiveImageFillMode.Cover
                                 },
                                 Items = new List<AdaptiveElement>
                                 {
@@ -201,43 +205,7 @@ namespace Witivio.Copilot4Researcher.Providers.ClinicalTrials.Cards
                     new AdaptiveColumn
                     {
                         Width = "stretch",
-                        Items = new List<AdaptiveElement>
-                        {
-                            new AdaptiveTextBlock
-                            {
-                                Text = contact.Name,
-                                Weight = AdaptiveTextWeight.Bolder,
-                                Wrap = true
-                            },
-                            new AdaptiveTextBlock
-                            {
-                                Text = contact.Email,
-                                IsSubtle = true,
-                                Wrap = true
-                            },
-                            new AdaptiveTextBlock
-                            {
-                                Text = contact.Phone,
-                                IsSubtle = true,
-                                Wrap = true
-                            },
-                            new AdaptiveActionSet
-                            {
-                                Actions = new List<AdaptiveAction>
-                                {
-                                    new AdaptiveOpenUrlAction
-                                    {
-                                        Title = "📞",
-                                        Url = new Uri("tel:"+ contact.Phone)
-                                    },
-                                    new AdaptiveOpenUrlAction
-                                    {
-                                        Title = "📧",
-                                        Url = new Uri("mailto:"+contact.Email)
-                                    }
-                                }
-                            }
-                        }
+                        Items = GetContactItems(contact)
                     }
                 }
                 };
@@ -286,6 +254,70 @@ namespace Witivio.Copilot4Researcher.Providers.ClinicalTrials.Cards
             var random = new Random();
             int index = random.Next(BackgroundsCircle.Length);
             return new Uri(BackgroundsCircle[index]);
+        }
+
+        private static List<AdaptiveElement> GetContactItems(ClinicalTrialContact contact)
+        {
+            var items = new List<AdaptiveElement>();
+
+            if (!string.IsNullOrWhiteSpace(contact.Name))
+            {
+                items.Add(new AdaptiveTextBlock
+                {
+                    Text = contact.Name,
+                    Weight = AdaptiveTextWeight.Bolder,
+                    Wrap = true
+                });
+            }
+
+            if (!string.IsNullOrWhiteSpace(contact.Email))
+            {
+                items.Add(new AdaptiveTextBlock
+                {
+                    Text = contact.Email,
+                    IsSubtle = true,
+                    Wrap = true
+                });
+            }
+
+            if (!string.IsNullOrWhiteSpace(contact.Phone))
+            {
+                items.Add(new AdaptiveTextBlock
+                {
+                    Text = contact.Phone,
+                    IsSubtle = true,
+                    Wrap = true
+                });
+            }
+
+            var actions = new List<AdaptiveAction>();
+            if (!string.IsNullOrWhiteSpace(contact.Phone))
+            {
+                actions.Add(new AdaptiveOpenUrlAction
+                {
+                    Title = "📞",
+                    Url = new Uri("tel:" + contact.Phone)
+                });
+            }
+
+            if (!string.IsNullOrWhiteSpace(contact.Email))
+            {
+                actions.Add(new AdaptiveOpenUrlAction
+                {
+                    Title = "📧",
+                    Url = new Uri("mailto:" + contact.Email)
+                });
+            }
+
+            if (actions.Any())
+            {
+                items.Add(new AdaptiveActionSet
+                {
+                    Actions = actions
+                });
+            }
+
+            return items;
         }
     }
 }

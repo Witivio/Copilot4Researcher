@@ -16,28 +16,28 @@ namespace Witivio.Copilot4Researcher.Providers.ClinicalTrials
 
             return result.Studies.Select(s => new ClinicalTrial
             {
-                Status = s.ProtocolSection.StatusModule.OverallStatus,
-                Title = s.ProtocolSection.IdentificationModule.OfficialTitle,
-                NctId = s.ProtocolSection.IdentificationModule.NctId,
-                Conditions = s.ProtocolSection.ConditionsModule.Conditions,
-                SponsorAffiliation = s.ProtocolSection.SponsorCollaboratorsModule.ResponsibleParty.InvestigatorAffiliation,
-                StartDate = s.ProtocolSection.StatusModule.StartDateStruct.Date,
-                CompletionDate = s.ProtocolSection.StatusModule.CompletionDateStruct.Date,
-                EnrollmentCount = s.ProtocolSection.DesignModule.EnrollmentInfo.Count,
-                Phases = s.ProtocolSection.DesignModule.Phases,
-                Interventions = s.ProtocolSection.ArmsInterventionsModule.Interventions.Select(i => new Models.Intervention
+                Status = s.ProtocolSection?.StatusModule?.OverallStatus,
+                Title = s.ProtocolSection?.IdentificationModule?.OfficialTitle,
+                NctId = s.ProtocolSection?.IdentificationModule?.NctId,
+                Conditions = s.ProtocolSection?.ConditionsModule?.Conditions,
+                SponsorAffiliation = s.ProtocolSection?.SponsorCollaboratorsModule?.ResponsibleParty?.InvestigatorAffiliation,
+                StartDate = s.ProtocolSection?.StatusModule?.StartDateStruct?.Date,
+                CompletionDate = s.ProtocolSection?.StatusModule?.CompletionDateStruct?.Date,
+                EnrollmentCount = s.ProtocolSection?.DesignModule?.EnrollmentInfo?.Count ?? 0,
+                Phases = s.ProtocolSection?.DesignModule?.Phases,
+                Interventions = s.ProtocolSection?.ArmsInterventionsModule?.Interventions?.Select(i => new Models.Intervention
                 {
                     Type = i.Type,
                     Name = i.Name
                 }).ToList(),
-                Contacts = s.ProtocolSection.ContactsLocationsModule.CentralContacts.Select(c => new Models.ClinicalTrialContact
+                Contacts = s.ProtocolSection?.ContactsLocationsModule?.CentralContacts?.Select(c => new Models.ClinicalTrialContact
                 {
                     Name = c.Name,
                     Email = c.Email,
                     Phone = c.Phone
                 }).ToList(),
-                Summary = s.ProtocolSection.DescriptionModule.BriefSummary,
-                Link = $"https://www.clinicaltrials.gov/study/{s.ProtocolSection.IdentificationModule.NctId}"
+                Summary = s.ProtocolSection?.DescriptionModule?.BriefSummary,
+                Link = $"https://www.clinicaltrials.gov/study/{s.ProtocolSection?.IdentificationModule.NctId}"
             });
         }
 

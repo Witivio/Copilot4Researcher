@@ -92,6 +92,10 @@ namespace Witivio.Copilot4Researcher.Controllers
                     {
                         publication.ImpactFactor = (double)journalInfo.CitesPerDoc2Years;
                     }
+                    else
+                    {
+                        publication.ImpactFactor = 0;
+                    }   
                 }
                 catch (Exception ex)
                 {

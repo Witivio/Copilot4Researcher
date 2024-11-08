@@ -49,7 +49,7 @@ namespace Witivio.Copilot4Researcher.Api.Controllers
                 renderingResults.Add(new CopilotRenderingResult<ClinicalTrial>
                 {
                     Result = clinicalTrial,
-                    DisplayTemplate = $"$.card{i}"
+                    DisplayTemplate = $"$.templates.card{i}"
                 });
             }
 

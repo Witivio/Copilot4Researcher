@@ -8,6 +8,7 @@
     "functions": [
         {
             "name": "SearchGene",
+           
             "description": "It retrieves detailed information on gene or protein from ProteinAtlas 🧬",
             "capabilities": {
                 "response_semantics": {

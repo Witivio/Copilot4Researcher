@@ -4,7 +4,7 @@ info:
   description: An API to search literature through PubMed
   version: v1
 servers:
-  - url: https://9007a564c526.ngrok.app
+  - url: https://1cd2f98ce805.ngrok.app
     description: Production Server
 paths:
   /Gene/Search:

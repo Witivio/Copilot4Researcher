@@ -4,7 +4,7 @@ info:
   description: An API to search patents
   version: v1
 servers:
-  - url: https://e1ed1a7105d2.ngrok.app
+  - url: https://1cd2f98ce805.ngrok.app
     description: Production Server
 paths:
   /Patent/Search:
@@ -12,16 +12,16 @@ paths:
       tags:
         - Patent
       summary: Search for patent
-      description: This endpoint allows users to search patent with parameters like keywords, date ranges, and authors. The query interprets user intent, applying filters to return relevant. Users can specify their preferences, such as ''Show latest patent about BRCA1,'' and the system will automatically retrieve the most relevant results.'
+      description: This endpoint allows users to search Patent with parameters like keywords, date ranges. The query interprets user intent, applying filters to return relevant. Users can specify their preferences, such as ''Show latest patent about cancer device,'' and the system will automatically retrieve the most relevant results.'
       operationId: SearchPatents
       parameters:
         - name: UserInput
           in: query
-          description: 'User input as a natural language query, e.g., ''Show latest patents about BRCA1.'''
+          description: 'User input as a natural language query, e.g., ''Show latest patents about cancer device.'''
           required: true
           schema:
             type: string
-            description: 'User input as a natural language query, e.g., ''Show latest patents about BRCA1.'''
+            description: 'User input as a natural language query, e.g., ''Show latest patents about cancer device.'''
         - name: UserIntent
           in: query
           description: 'User''s intent derived from the natural language input, e.g., ''search for recent patents.'''
@@ -38,16 +38,16 @@ paths:
             description: 'Keywords or topics to focus the search on, extracted from the user input, separated by semicolons.'
         - name: Countries
           in: query
-          description: ISO 2 letters name of one or many countries separated by semicolons. Default is empty
+          description: Optional. ISO 2 letters name of one or many countries separated by semicolons. Default is empty
           schema:
             type: string
-            description: ISO 2 letters name of one or many countries separated by semicolons. Default is empty
+            description: Optional. ISO 2 letters name of one or many countries separated by semicolons. Default is empty
         - name: Language
           in: query
-          description: 'Language of the patent. Supported value: ENGLISH, GERMAN, CHINESE, FRENCH, SPANISH, ARABIC, JAPANESE, KOREAN, PORTUGUESE, RUSSIAN, ITALIAN, DUTCH, SWEDISH, FINNISH, NORWEGIAN, DANISH. Default is ENGLISH'
+          description: 'Optional. Language of the patent. Supported value: ENGLISH, GERMAN, CHINESE, FRENCH, SPANISH, ARABIC, JAPANESE, KOREAN, PORTUGUESE, RUSSIAN, ITALIAN, DUTCH, SWEDISH, FINNISH, NORWEGIAN, DANISH. Default is ENGLISH'
           schema:
             type: string
-            description: 'Language of the patent. Supported value: ENGLISH, GERMAN, CHINESE, FRENCH, SPANISH, ARABIC, JAPANESE, KOREAN, PORTUGUESE, RUSSIAN, ITALIAN, DUTCH, SWEDISH, FINNISH, NORWEGIAN, DANISH. Default is ENGLISH'
+            description: 'Optional. Language of the patent. Supported value: ENGLISH, GERMAN, CHINESE, FRENCH, SPANISH, ARABIC, JAPANESE, KOREAN, PORTUGUESE, RUSSIAN, ITALIAN, DUTCH, SWEDISH, FINNISH, NORWEGIAN, DANISH. Default is ENGLISH'
         - name: BeforePriorityDate
           in: query
           description: Optional. Filter to get patent priority before a date. The format is YYYYMMDD
@@ -117,17 +117,13 @@ paths:
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PatentCopilotRenderingResultsWrapper'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
-  components:
+components:
   schemas:
     ProblemDetails:
       type: object
@@ -149,33 +145,3 @@ paths:
           type: string
           nullable: true
       additionalProperties: { }
-    PatentCopilotRenderingResult:
-      type: object
-      properties:
-        result:
-          $ref: '#/components/schemas/Patent'
-        icon:
-          type: string
-          nullable: true
-        displayTemplate:
-          type: string
-          nullable: true
-      additionalProperties: false
-    PatentCopilotRenderingResultsWrapper:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/PatentCopilotRenderingResult'
-          nullable: true
-        templates:
-          $ref: '#/components/schemas/CopilotResultTemplates'
-      additionalProperties: false
-    PatentStatus:
-      enum:
-        - 0
-        - 1
-        - 2
-      type: integer
-      format: int32

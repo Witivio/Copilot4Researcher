@@ -90,7 +90,7 @@ namespace Witivio.Copilot4Researcher.Controllers
                 rendering.Add(new CopilotRenderingResult<Patent>
                 {
                     Result = patent,
-                    DisplayTemplate = $"$.{cardId}"
+                    DisplayTemplate = $"$.templates.{cardId}"
                 });
 
                 index++;

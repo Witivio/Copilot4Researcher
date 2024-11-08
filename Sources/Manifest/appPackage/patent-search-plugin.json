@@ -1,9 +1,9 @@
 {
     "$schema": "https://aka.ms/json-schemas/copilot/plugin/v2.1/schema.json",
     "schema_version": "v2.1",
-    "name_for_human": "Patents",
+    "name_for_human": "Patents search 🔎",
     "description_for_human": "An API to search patents",
-    "namespace": "copilotforresearcher-patents",
+    "namespace": "copilotforresearcherpatents",
     "functions": [
         {
             "name": "SearchPatents",
@@ -14,14 +14,14 @@
                     "examples": ""
                 }
             },
-            "description": "📚 queries google patent to learn about patents from around the world",
+            "description": "📚 queries Google patent to learn about patents from around the world",
             "capabilities": {
                 "response_semantics": {
-                  "data_path": "$",
+                  "data_path": "$.results",
                   "properties": {
-                    "title": "$.title",
-                    "subtitle": "$.wipo",
-                    "url":"$.pdfUrl",
+                    "title": "$.result.title",
+                    "subtitle": "$.result.wipo",
+                    "url":"$.result.pdfUrl",
                     "template_selector": "$.displayTemplate"
                   }
                  

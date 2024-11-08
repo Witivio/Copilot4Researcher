@@ -4,24 +4,24 @@ info:
   description: An API to search clinical trials
   version: v1
 servers:
-  - url: https://e1ed1a7105d2.ngrok.app
+  - url: https://1cd2f98ce805.ngrok.app
     description: Production Server
 paths:
   /ClinicalTrials/search:
     get:
       tags:
         - ClinicalTrials
-      summary: Search clinical trials
+      summary: Search for clinical trials
       operationId: SearchClinicalTrials
-      description: Search for clinical trials using keywords
+      description: This endpoint allows users to search clinical trials with parameters like keywords. The query interprets user intent, applying filters to return relevant. Users can specify their preferences, such as ''Show latest ongoing clinical trials on lung cancer,'' and the system will automatically retrieve the most relevant results.'
       parameters:
         - name: UserInput
           in: query
-          description: 'User input as a natural language query, e.g., ''Show latest articles about BRCA1.'''
+          description: 'User input as a natural language query, e.g., ''Show latest ongoing clinical trials on lung cancer.'''
           required: true
           schema:
             type: string
-            description: 'User input as a natural language query, e.g., ''Show latest articles about BRCA1.'''
+            description: 'User input as a natural language query, e.g., ''Show latest ongoing clinical trials on lung cancer.'''
         - name: UserIntent
           in: query
           description: 'User''s intent derived from the natural language input, e.g., ''search for recent studies.'''
@@ -75,7 +75,8 @@ paths:
             description: Optional. NCT Number of a study
       responses:
         '200':
-          description: Returns a list of clinical trials matching the search criteria
+          description: OK
+components:
   schemas:
     ProblemDetails:
       type: object

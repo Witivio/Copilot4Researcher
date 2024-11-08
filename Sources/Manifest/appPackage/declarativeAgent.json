@@ -12,6 +12,14 @@
         {
             "id": "litterature-search",
             "file": "litterature-search-plugin.json"
+        },
+        {
+            "id": "clinicaltrials-search",
+            "file": "clinicaltrials-search-plugin.json"
+        },
+        {
+            "id": "patent-search",
+            "file": "patent-search-plugin.json"
         }
     ],
     "conversation_starters": [

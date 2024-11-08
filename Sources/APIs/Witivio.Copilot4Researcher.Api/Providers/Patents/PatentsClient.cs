@@ -36,7 +36,7 @@ namespace Witivio.Copilot4Researcher.Providers.Patents
                 {
                     Assignee = item.Assignee,
                     GooglePatentUrl = "https://patents.google.com/" + item.PatentId,
-                    Title = item.Title,
+                    Title = item.Title.Replace("( ...", ""),
                     Summary = item.Snippet,
                     Inventor = item.Inventor,
                     PDFUrl = item.Pdf,
