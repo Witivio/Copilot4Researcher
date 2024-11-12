@@ -3,30 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Witivio.Copilot4Researcher.Models
 {
-    public class LiteratureSearchQuery
+
+    public class LiteratureSearchQuery : SearchQueryBase
     {
-
-        
-        
-        public string UserInput { get; set; }
-
-        
-        
-        public string UserIntent { get; set; }
-
-        
-        public int NbItems { get; set; } = 5;
-
-        
-        
         public string[] Keywords { get; set; }
-
         
         public DateTime? MinDate { get; set; }
-
         
         public DateTime? MaxDate { get; set; }
-
         
         public string[] Authors { get; set; }
     }
@@ -57,6 +41,9 @@ namespace Witivio.Copilot4Researcher.Models
         [SwaggerSchema(Description = "Optional. Number of items to return. Default value is 5")]
         public int NbItems { get; set; } = 5;
 
+        [SwaggerSchema(Description = "Optional. How to sort the result. Possible values: Relevance or Date. Default value is Relevance")]
+        public SortBy Sort { get; set; } = SortBy.Relevance;
+
         public LiteratureSearchQuery ToQuery()
         {
             var result = new LiteratureSearchQuery
@@ -67,7 +54,8 @@ namespace Witivio.Copilot4Researcher.Models
                 MinDate = this.MinDate,
                 Authors = this.Authors?.Split(';'),
                 Keywords = this.Keywords?.Split(";"),
-                NbItems = this.NbItems
+                NbItems = this.NbItems,
+                Sort = this.Sort
 
             };
             return result;

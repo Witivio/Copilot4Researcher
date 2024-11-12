@@ -149,12 +149,19 @@ namespace Witivio.Copilot4Researcher.Providers.BioRxiv
                 queryParameters.Add($"filter%3Adate-to%3A{query.MaxDate.Value:yyyy-MM-dd}");
             }
 
-            // Add sort, format, and other static parameters as in the example
             queryParameters.Add("jcode%3Abiorxiv");
             queryParameters.Add("numresults%3A" + query.NbItems);
-            queryParameters.Add("sort%3Arelevance-rank");
+            
             queryParameters.Add("format_result%3Astandard");
 
+            if (query.Sort == SortBy.Date)
+            {
+                queryParameters.Add("sort%3Adate");
+            }
+            else
+            {
+                queryParameters.Add("sort%3Arelevance-rank");
+            }
             // Join all parameters into the final URL
             string queryString = string.Join("%20", queryParameters);
 

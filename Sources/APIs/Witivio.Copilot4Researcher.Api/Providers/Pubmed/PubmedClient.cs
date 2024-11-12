@@ -64,18 +64,20 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
 
                 var publication = new Publication
                 {
-                    Id = article.MedlineCitation.Pmid,
-                    Title = article.MedlineCitation.Article.GetArticleTitleTextAsPlainText(),
-                    JournalName = article.MedlineCitation.Article.Journal.Title,
-                    Abstract = article.MedlineCitation.Article.Abstract?.GetAbstractTextAsPlainText(),
-                    Authors = new Authors
-                    {
-                        First = FormatName(article.MedlineCitation.Article.AuthorList.Authors.First()),
-                        Last = FormatName(article.MedlineCitation.Article.AuthorList.Authors.Last())
-                    },
-                    DOI = article.MedlineCitation.Article.ELocationId?.Text,
+                    Id = article.MedlineCitation?.Pmid ?? string.Empty,
+                    Title = article.MedlineCitation?.Article?.GetArticleTitleTextAsPlainText() ?? string.Empty,
+                    JournalName = article.MedlineCitation?.Article?.Journal?.Title ?? string.Empty,
+                    Abstract = article.MedlineCitation?.Article?.Abstract?.GetAbstractTextAsPlainText(),
+                    Authors = article.MedlineCitation?.Article?.AuthorList?.Authors is { Count: > 0 } authors
+                        ? new Authors
+                        {
+                            First = FormatName(authors.First()),
+                            Last = FormatName(authors.Last())
+                        }
+                        : null,
+                    DOI = article.MedlineCitation?.Article?.ELocationId?.Text,
                     Citations = citationCount.ToString(),
-                    Link = "https://pubmed.ncbi.nlm.nih.gov/" + article.MedlineCitation.Pmid,
+                    Link = $"https://pubmed.ncbi.nlm.nih.gov/{article.MedlineCitation?.Pmid}",
                     Source = "Pubmed"
                 };
 
@@ -175,7 +177,7 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
             builder["retmax"] = query.NbItems.ToString();
             builder["retmode"] = "json";
             builder["datetype"] = "pdat"; 
-            builder["sort"] = "relevance";
+            //builder["sort"] = "relevance";
 
             // Add keywords
             if (query.Keywords != null && query.Keywords.Any())
@@ -201,6 +203,8 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
             {
                 builder["maxdate"] = query.MaxDate.Value.ToString("yyyy/MM/dd");
             }
+
+            builder["sort"] = query.Sort == SortBy.Date ? "pubdate" : "relevance";
 
             
             return builder.ToString();

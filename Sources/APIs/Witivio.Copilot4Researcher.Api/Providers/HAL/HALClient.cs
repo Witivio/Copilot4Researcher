@@ -46,8 +46,8 @@ namespace Witivio.Copilot4Researcher.Providers.ProteinAtlas
                     Abstract = doc.AbstractS.FirstOrDefault(),
                     Authors = new Authors
                     {
-                        First = doc.AuthFullNameS.First(),
-                        Last = doc.AuthFullNameS.Last()
+                        First = doc.AuthFullNameS?.First(),
+                        Last = doc.AuthFullNameS?.Last()
                     },
                     DOI = doc.DoiIdS,
                     Citations = null,
@@ -80,6 +80,9 @@ namespace Witivio.Copilot4Researcher.Providers.ProteinAtlas
             {
                 builder["q"] += string.Join(" ", query.Authors);
             }
+
+            // Add sort parameter
+            builder["sort"] = query.Sort == SortBy.Date ? "producedDate_s desc" : "score desc";
 
             return builder.ToString();
         }

@@ -13,17 +13,20 @@ namespace Witivio.Copilot4Researcher.Providers.Patents
     public class PatentsClient : IPatentsClient
     {
         private readonly HttpClient _httpClient;
+        private readonly string _apiKey;
 
-        public PatentsClient(HttpClient httpClient)
+        public PatentsClient(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+            _apiKey = configuration["SerpApi:ApiKey"] 
+                ?? throw new ArgumentNullException("SerpApi:ApiKey configuration is missing");
         }
 
         public async Task<IEnumerable<Patent>> SearchAsync(PatentSearchQuery query)
         {
             var queryString = BuildSearchQuery(query);
 
-            var url = $"https://serpapi.com/search?engine=google_patents&{queryString}&api_key=8e91f8858b4d71058f4fb88e05a1f44904cadddf9b1fee45d70f9cf053baa9c4";
+            var url = $"https://serpapi.com/search?engine=google_patents&{queryString}&api_key={_apiKey}";
 
             HttpResponseMessage response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();

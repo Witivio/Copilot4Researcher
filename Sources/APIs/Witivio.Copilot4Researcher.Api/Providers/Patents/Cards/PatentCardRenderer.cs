@@ -55,7 +55,7 @@ namespace Witivio.Copilot4Researcher.Providers.Patents.Cards
                 {
                     new AdaptiveShowCardAction
                     {
-                        Title = "Detail",
+                        Title = "Details",
                         IconUrl = MoreIcon,
                         Card = new AdaptiveCard("1.6")
                         {

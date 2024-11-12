@@ -19,7 +19,7 @@ namespace Witivio.Copilot4Researcher.Providers.ClinicalTrials.Cards
 
         private const string DARK_GREEN_BG = "data:image/gif;base64,R0lGODlhCAABAHAAACwAAAAACAABAIGZzP8AAAAAAAAAAAACA4RvBQA7";
 
-        private const string YELLOW_BG = "data:image/gif;base64,R0lGODlhCAABAHAAACwAAAAACAABAIGZzP8AAAAAAAAAAAACA4RvBQA7";
+        private const string YELLOW_BG = "data:image/gif;base64,R0lGODlhCAABAHAAACwAAAAACAABAIH/wQAAAAAAAAAAAAACA4RvBQA7";
 
         private const string BROWNISH_BG = "data:image/gif;base64,R0lGODlhCAABAHAAACwAAAAACAABAIGZzP8AAAAAAAAAAAACA4RvBQA7";
 
@@ -74,7 +74,7 @@ namespace Witivio.Copilot4Researcher.Providers.ClinicalTrials.Cards
                                             {
                                                 new AdaptiveTextBlock
                                                 {
-                                                    Text = trial.Status,
+                                                    Text = trial.Status.Replace("_", " "),
                                                     Wrap = true,
                                                     Style = AdaptiveTextBlockStyle.Heading
                                                 }
@@ -240,7 +240,7 @@ namespace Witivio.Copilot4Researcher.Providers.ClinicalTrials.Cards
                     return new Uri(BLUE_BG);
                 case "ACTIVE":
                     return new Uri(DARK_GREEN_BG);
-                case "NOT YET RECRUITING":
+                case "NOT_YET_RECRUITING":
                     return new Uri(YELLOW_BG);
                 default:
                     return new Uri(BROWNISH_BG);
