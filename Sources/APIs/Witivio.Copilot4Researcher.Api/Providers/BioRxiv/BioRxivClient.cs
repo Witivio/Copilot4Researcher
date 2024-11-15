@@ -47,7 +47,7 @@ namespace Witivio.Copilot4Researcher.Providers.BioRxiv
                     Title = c.Descendants("span").FirstOrDefault(n => n.HasClass("highwire-cite-title"))?.InnerText.Trim(),
                     Link = "https://www.biorxiv.org/" + c.Descendants("a").FirstOrDefault(n => n.HasClass("highwire-cite-linked-title"))?.GetAttributeValue("href", ""),
                     JournalName = "bioRxiv",
-                    Source = "bioRxiv",
+                   Source =  Publication.PublicationSource.BioRxiv,
                     Date = FormatToDateOnly(c.Descendants("span").FirstOrDefault(n => n.HasClass("highwire-cite-metadata-pages"))?.InnerText),
                     DOI = RemoveSchema(c.Descendants("span").FirstOrDefault(n => n.HasClass("highwire-cite-metadata-doi"))?.InnerText),
                     Authors = new Authors

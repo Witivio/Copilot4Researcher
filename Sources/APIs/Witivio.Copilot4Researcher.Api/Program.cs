@@ -13,6 +13,9 @@ using Witivio.Copilot4Researcher.Providers.Patents;
 using Witivio.Copilot4Researcher.Providers.ClinicalTrials;
 using Witivio.Copilot4Researcher.Providers.Scimago;
 using Azure.Identity;
+using Microsoft.Graph;
+using Azure.Core;
+using Witivio.Copilot4Researcher.Api.Providers;
 
 
 
@@ -75,7 +78,27 @@ builder.Services.AddHttpClient<IClinicalTrialsClient, ClinicalTrialsClient>().Ad
 
 builder.Services.AddSingleton<IJournalDataService, JournalDataService>();
 
+builder.Services.AddSingleton<TokenCredential, DefaultAzureCredential>();
 
+// https://learn.microsoft.com/en-us/azure/app-service/scenario-secure-app-access-microsoft-graph-as-app?tabs=azure-powershell
+
+builder.Services.AddScoped<GraphServiceClient>(sp =>
+{
+    //var managedIdentityCredential = new ManagedIdentityCredential();
+
+    //var chainedTokenCredential = new ChainedTokenCredential(
+    //    managedIdentityCredential,
+    //    new EnvironmentCredential()
+    //);
+
+    var credential = sp.GetRequiredService<TokenCredential>();
+
+    return new GraphServiceClient(credential, new[] { "https://graph.microsoft.com/.default" });
+
+});
+
+
+builder.Services.AddScoped<IRewriteRulesService, RewriteRulesSharePointService>(); 
 
 
 var app = builder.Build();

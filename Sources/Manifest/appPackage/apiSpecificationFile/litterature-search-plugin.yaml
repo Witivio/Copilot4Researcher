@@ -4,7 +4,7 @@ info:
   description: An API to search literature through PubMed
   version: v1
 servers:
-  - url: https://1cd2f98ce805.ngrok.app
+  - url: https://7502c69eca89.ngrok.app
     description: Production Server
 paths:
   /Literature/Search:
@@ -62,6 +62,12 @@ paths:
           schema:
             type: integer
             description: 'Optional. Number of items to return. Default value is 5'
+        - name: Prioritze
+          in: query
+          description: 'Optional. Whether to prioritize recent articles. Possible values: Recent or None. Default value is None. Example: What is the latest articles about X => the value is Recent'
+          schema:
+            type: string
+            description: 'Optional. Whether to prioritize recent articles. Possible values: Recent or None. Default value is null. Example: What is the latest articles about X => the value is Recent'
       responses:
         '200':
           description: OK

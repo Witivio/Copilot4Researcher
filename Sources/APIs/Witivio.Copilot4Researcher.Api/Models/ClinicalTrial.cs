@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Witivio.Copilot4Researcher.Models
 {
@@ -6,17 +7,27 @@ namespace Witivio.Copilot4Researcher.Models
     {
         public string Status { get; set; }
         public string Title { get; set; }
+        [JsonIgnore]
         public string NctId { get; set; }
+        [JsonIgnore]
         public List<string> Conditions { get; set; }
+        [JsonIgnore]
         public string SponsorAffiliation { get; set; }
+        [JsonIgnore]
         public string StartDate { get; set; }
+        [JsonIgnore]
         public string CompletionDate { get; set; }
+        [JsonIgnore]
         public int EnrollmentCount { get; set; }
+        [JsonIgnore]
         public List<string> Phases { get; set; }
+        [JsonIgnore]
         public List<Intervention> Interventions { get; set; }
+        [JsonIgnore]
         public List<ClinicalTrialContact> Contacts { get; set; }
-        public string Summary { get; set; }
 
+        public string Summary { get; set; }
+        [JsonIgnore]
         public string Link { get; set; }
     }
 

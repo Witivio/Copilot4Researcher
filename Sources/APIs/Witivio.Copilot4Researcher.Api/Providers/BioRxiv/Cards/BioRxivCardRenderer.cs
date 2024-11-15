@@ -4,7 +4,7 @@ using Witivio.Copilot4Researcher.Models;
 
 namespace Witivio.Copilot4Researcher.Providers.Pubmed.Cards
 {
-    public class PubmedCardRenderer
+    public class BioRxivCardRenderer
     {
         public static AdaptiveCard Render(Publication publication)
         {
@@ -21,30 +21,34 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed.Cards
 
             // Facts
             var factSet = new AdaptiveFactSet();
-            
+
             // Authors fact
             var authorText = $"{publication.Authors.First}, ..., {publication.Authors.Last}";
-                
-                
+
+
             factSet.Facts.Add(new AdaptiveFact("Authors", authorText));
-            if (publication.Date.HasValue)  
+            if (publication.Date.HasValue)
             {
                 factSet.Facts.Add(new AdaptiveFact("Date", publication.Date.Value.ToString("yyyy-MM-dd")));
-            }else{
+            }
+            else
+            {
                 factSet.Facts.Add(new AdaptiveFact("Date", "N/A"));
             }
-            
+
             if (publication.Citations.HasValue && publication.Citations.Value > 0)
             {
                 factSet.Facts.Add(new AdaptiveFact("Citations", publication.Citations.ToString()));
             }
-            
+
             factSet.Facts.Add(new AdaptiveFact("Journal", publication.JournalName));
-            
+
             if (publication.ImpactFactor.HasValue && publication.ImpactFactor.Value > 0)
             {
                 factSet.Facts.Add(new AdaptiveFact("Impact factor", publication.ImpactFactor.ToString()));
-            }else{
+            }
+            else
+            {
                 factSet.Facts.Add(new AdaptiveFact("Impact factor", "N/A"));
             }
 
@@ -76,36 +80,6 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed.Cards
 
             actionSet.Actions.Add(abstractAction);
             actionSet.Actions.Add(sourceAction);
-
-            // Add Cite action only for Pubmed sources
-            if (publication.Source == Publication.PublicationSource.Pubmed)
-            {
-                var citeAction = new AdaptiveShowCardAction
-                {
-                    Title = "Cite",
-                    IconUrl = CardIcons.More
-                };
-
-                var citeCard = new AdaptiveCard("1.6");
-                
-                // Add download actions
-                citeCard.Actions.Add(new AdaptiveOpenUrlAction
-                {
-                    Title = ".nbib",
-                    Url = new Uri($"https://1cd2f98ce805.ngrok.app/literature/Download/{publication.Id}/nbib"),
-                    IconUrl = CardIcons.Download
-                });
-                
-                citeCard.Actions.Add(new AdaptiveOpenUrlAction
-                {
-                    Title = ".bib",
-                    Url = new Uri($"https://1cd2f98ce805.ngrok.app/literature/Download/{publication.Id}/bibtex"),
-                    IconUrl = CardIcons.Download
-                });
-
-                citeAction.Card = citeCard;
-                actionSet.Actions.Add(citeAction);
-            }
 
             card.Body.Add(actionSet);
 

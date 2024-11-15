@@ -8,9 +8,15 @@ namespace Witivio.Copilot4Researcher.Models
         
         public int NbItems { get; set; } = 5;
 
-     
-
         public SortBy Sort { get; set; } = SortBy.Relevance;
+
+        public Prioritze Prioritze { get; set; } = Prioritze.None;
+    }
+
+    public enum Prioritze
+    {
+        None,
+        Recent
     }
 
     public enum SortBy

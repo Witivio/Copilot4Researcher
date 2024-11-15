@@ -1,7 +1,7 @@
 {
     "$schema": "https://aka.ms/json-schemas/copilot/plugin/v2.1/schema.json",
     "schema_version": "v2.1",
-    "name_for_human": "ProteinAtlas",
+    "name_for_human": "ProteinAtlas 🧬",
     "logo_url":"https://www.proteinatlas.org/images_static/favicon-32x32.png",
     "description_for_human": "An API to search gene or protein",
     "namespace": "genecopilotforresearcher",

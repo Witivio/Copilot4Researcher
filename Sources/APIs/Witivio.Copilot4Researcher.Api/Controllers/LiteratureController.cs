@@ -8,6 +8,7 @@ using Witivio.Copilot4Researcher.Providers.Pubmed;
 using Witivio.Copilot4Researcher.Providers.Scimago;
 using System.Text;
 using  Witivio.Copilot4Researcher.Core;
+using Witivio.Copilot4Researcher.Providers.Pubmed.Cards;
 
 namespace Witivio.Copilot4Researcher.Controllers
 {
@@ -72,7 +73,36 @@ namespace Witivio.Copilot4Researcher.Controllers
 
                 await EnrichPublicationsWithJournalInfoAsync(publications);
                 
-                return Results.Ok(publications);
+            var resultTemplates = new CopilotResultTemplates();
+            var renderingResults = new List<CopilotRenderingResult<Publication>>();
+
+            foreach (var (publication, index) in publications.Select((p, i) => (p, i)))
+            {
+                var cardRenderer = publication.Source switch
+                {
+                    Publication.PublicationSource.Pubmed => PubmedCardRenderer.Render(publication),
+                    Publication.PublicationSource.BioRxiv => BioRxivCardRenderer.Render(publication),
+                    Publication.PublicationSource.HAL => HALCardRenderer.Render(publication),
+                    _ => throw new ArgumentException($"Unknown publication source: {publication.Source}")
+                };
+
+                var cardId = $"card{index}";
+                resultTemplates.AddCard(cardId, cardRenderer);
+
+                renderingResults.Add(new CopilotRenderingResult<Publication>
+                {
+                    Result = publication,
+                    DisplayTemplate = $"$.templates.{cardId}"
+                });
+            }
+
+            var renderingResultsWrapper = new CopilotRenderingResultsWrapper<Publication>
+            {
+                Templates = resultTemplates,
+                Results = renderingResults
+            };
+
+                return Results.Ok(renderingResultsWrapper);
             }
             catch (Exception ex)
             {

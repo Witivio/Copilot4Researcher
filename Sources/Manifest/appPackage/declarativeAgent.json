@@ -20,6 +20,10 @@
         {
             "id": "patent-search",
             "file": "patent-search-plugin.json"
+        },
+        {
+            "id": "rewrite",
+            "file": "rewrite-plugin.json"
         }
     ],
     "conversation_starters": [

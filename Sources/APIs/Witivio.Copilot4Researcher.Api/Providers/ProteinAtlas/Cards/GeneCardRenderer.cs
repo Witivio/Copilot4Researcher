@@ -1,4 +1,5 @@
 ﻿using AdaptiveCards;
+using Witivio.Copilot4Researcher.Common;
 using Witivio.Copilot4Researcher.Models;
 
 namespace Witivio.Copilot4Researcher.Providers.ProteinAtlas.Cards
@@ -38,13 +39,13 @@ namespace Witivio.Copilot4Researcher.Providers.ProteinAtlas.Cards
                         new AdaptiveOpenUrlAction
                         {
                             Title = "ProteinAtlas",
-                            IconUrl  = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABZ0lEQVRIieXVu0pcURTG8V9kCCKWYhVERMQHCKIg4g0REbS0skjEwrxBXsLCh7CUkC5FakshxEtC1CRFZBoVC43ijMXZJx7F0TWZ6fxgc/Zlrf+3ztmHvcn0Bnu4eqStu6v3+Fsj9hp/sJzDq4H29Z7BeiBn7wV20I9PWEXFw9pCuTBuxyBaCnNzWCmMT+A8uc3UAEc1K/tk1VR0NbH/TU43AJ92W+gXvM4NWh7LCmoKG2jFNiZQSmuVRg0m8SHBdxO8jI60ftmIwXgB/g1jOEprbY0ajOJjAt2Hw8v0vKD+TR7BWcr5jlcPxHTK3m6lXoPhAvwHuiIVRQ0GcZpiD6LwqMFAAf4T3VF4xKAXxynmN3oCzL5UyFrEYLwA7w0WvZjnlJ6KxGcMYd/dwy6kiAFs1gvO1Yyz6BkYVAr9ZnKRbfIv2X/7DpdqX5lRlfA29Q9hSezS/582n7suyw6vZkCvZXfyAtwA7YGix5SE1SIAAAAASUVORK5CYII=",
+                            IconUrl = CardIcons.ExternalLink,
                             Url = new Uri(gene.ProteinAtlasLink)
                         },
                         new AdaptiveOpenUrlAction
                         {
                             Title = "Uniprot",
-                             IconUrl = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABZ0lEQVRIieXVu0pcURTG8V9kCCKWYhVERMQHCKIg4g0REbS0skjEwrxBXsLCh7CUkC5FakshxEtC1CRFZBoVC43ijMXZJx7F0TWZ6fxgc/Zlrf+3ztmHvcn0Bnu4eqStu6v3+Fsj9hp/sJzDq4H29Z7BeiBn7wV20I9PWEXFw9pCuTBuxyBaCnNzWCmMT+A8uc3UAEc1K/tk1VR0NbH/TU43AJ92W+gXvM4NWh7LCmoKG2jFNiZQSmuVRg0m8SHBdxO8jI60ftmIwXgB/g1jOEprbY0ajOJjAt2Hw8v0vKD+TR7BWcr5jlcPxHTK3m6lXoPhAvwHuiIVRQ0GcZpiD6LwqMFAAf4T3VF4xKAXxynmN3oCzL5UyFrEYLwA7w0WvZjnlJ6KxGcMYd/dwy6kiAFs1gvO1Yyz6BkYVAr9ZnKRbfIv2X/7DpdqX5lRlfA29Q9hSezS/582n7suyw6vZkCvZXfyAtwA7YGix5SE1SIAAAAASUVORK5CYII=",
+                            IconUrl = CardIcons.ExternalLink,
                             Url = new Uri(gene.UniprotLink)
                         }
                     }

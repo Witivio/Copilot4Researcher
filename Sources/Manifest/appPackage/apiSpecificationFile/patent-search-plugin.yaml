@@ -4,7 +4,7 @@ info:
   description: An API to search patents
   version: v1
 servers:
-  - url: https://1cd2f98ce805.ngrok.app
+  - url: https://7502c69eca89.ngrok.app
     description: Production Server
 paths:
   /Patent/Search:

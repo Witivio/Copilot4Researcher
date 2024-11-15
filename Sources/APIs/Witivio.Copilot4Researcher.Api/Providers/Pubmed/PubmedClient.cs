@@ -60,7 +60,7 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
                         .SelectMany(linksetDb => linksetDb.Links)
                         .Count();
 
-                
+
 
                 var publication = new Publication
                 {
@@ -76,9 +76,9 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
                         }
                         : null,
                     DOI = article.MedlineCitation?.Article?.ELocationId?.Text,
-                    Citations = citationCount.ToString(),
+                    Citations = citationCount,
                     Link = $"https://pubmed.ncbi.nlm.nih.gov/{article.MedlineCitation?.Pmid}",
-                    Source = "Pubmed"
+                    Source = Publication.PublicationSource.Pubmed
                 };
 
                 var date = article.PubmedData.History.PubMedPubDates.FirstOrDefault(p => p.PubStatus == "pubmed");
@@ -112,7 +112,7 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
         private async Task<PubmedSearchResult> GetArticlesUsingESearch(LiteratureSearchQuery query)
         {
             string baseUrl = "/entrez/eutils/esearch.fcgi";
-            var queryString = BuildSearchQuery(query);
+            var queryString = BuildSearchQuery(query).Replace("%2b", "+");
             string url = $"{baseUrl}?{queryString}&api_key={GetNextApiKey()}";
             HttpResponseMessage response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
@@ -124,7 +124,7 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
         private async Task<PubmedArticleSet> GetArticleDetailsUsingEfetchAsync(params string[] pubMedIds)
         {
             string baseUrl = "/entrez/eutils/efetch.fcgi";
-            string idList = string.Join(",", pubMedIds); 
+            string idList = string.Join(",", pubMedIds);
             string url = $"{baseUrl}?db=pubmed&id={idList}&retmode=xml&api_key={GetNextApiKey()}";
 
             HttpResponseMessage response = await _httpClient.GetAsync(url);
@@ -176,8 +176,8 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
             builder["db"] = "pubmed";
             builder["retmax"] = query.NbItems.ToString();
             builder["retmode"] = "json";
-            builder["datetype"] = "pdat"; 
-            //builder["sort"] = "relevance";
+            builder["datetype"] = "pdat";
+            builder["sort"] = "relevance";
 
             // Add keywords
             if (query.Keywords != null && query.Keywords.Any())
@@ -197,16 +197,26 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
             if (query.MinDate.HasValue)
             {
                 builder["mindate"] = query.MinDate.Value.ToString("yyyy/MM/dd");
-
             }
+           
+
             if (query.MaxDate.HasValue)
             {
                 builder["maxdate"] = query.MaxDate.Value.ToString("yyyy/MM/dd");
             }
+           
+            // Filter out preprints
+            builder["term"] += "+NOT+preprint[pt]+hasabstract[text]";
 
+            // Sort by date or relevance
             builder["sort"] = query.Sort == SortBy.Date ? "pubdate" : "relevance";
 
-            
+            if (query.Prioritze == Prioritze.Recent)
+            {
+                builder["mindate"] = DateTime.UtcNow.AddYears(-1).ToString("yyyy/MM/dd");
+            }
+
+
             return builder.ToString();
         }
 
@@ -217,9 +227,19 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
             if (article == null)
                 return null;
 
-            var citationCount = await GetCitationUsingELinkAsync(pubmedId); 
-            return new Publication{
-                Id = article.MedlineCitation.Pmid, 
+            var citations = await GetCitationUsingELinkAsync(pubmedId);
+
+            var citationCount = citations.Linksets
+                         .Where(linkset => linkset.Ids.Contains(article.MedlineCitation.Pmid))
+                         .Where(linkset => linkset.Linksetdbs != null)
+                         .SelectMany(linkset => linkset.Linksetdbs)
+                         .Where(linksetDb => linksetDb.Links != null)
+                         .SelectMany(linksetDb => linksetDb.Links)
+                         .Count();
+
+            return new Publication
+            {
+                Id = article.MedlineCitation.Pmid,
                 Title = article.MedlineCitation.Article.GetArticleTitleTextAsPlainText(),
                 JournalName = article.MedlineCitation.Article.Journal.Title,
                 Abstract = article.MedlineCitation.Article.Abstract?.GetAbstractTextAsPlainText(),
@@ -229,9 +249,9 @@ namespace Witivio.Copilot4Researcher.Providers.Pubmed
                     Last = FormatName(article.MedlineCitation.Article.AuthorList.Authors.Last())
                 },
                 DOI = article.MedlineCitation.Article.ELocationId?.Text,
-                Citations = citationCount.ToString(),
+                Citations = citationCount,
                 Link = "https://pubmed.ncbi.nlm.nih.gov/" + article.MedlineCitation.Pmid,
-                Source = "Pubmed"   
+                Source = Publication.PublicationSource.Pubmed
             };
 
         }

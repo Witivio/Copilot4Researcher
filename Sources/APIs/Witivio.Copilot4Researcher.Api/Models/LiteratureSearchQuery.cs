@@ -44,6 +44,9 @@ namespace Witivio.Copilot4Researcher.Models
         [SwaggerSchema(Description = "Optional. How to sort the result. Possible values: Relevance or Date. Default value is Relevance")]
         public SortBy Sort { get; set; } = SortBy.Relevance;
 
+        [SwaggerSchema(Description = "Optional. Whether to prioritize recent articles. Default value is false.")]
+        public Prioritze Prioritze { get; set; } = Prioritze.None;
+
         public LiteratureSearchQuery ToQuery()
         {
             var result = new LiteratureSearchQuery
@@ -55,7 +58,8 @@ namespace Witivio.Copilot4Researcher.Models
                 Authors = this.Authors?.Split(';'),
                 Keywords = this.Keywords?.Split(";"),
                 NbItems = this.NbItems,
-                Sort = this.Sort
+                Sort = this.Sort,
+                Prioritze = this.Prioritze
 
             };
             return result;

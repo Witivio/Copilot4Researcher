@@ -50,9 +50,8 @@ namespace Witivio.Copilot4Researcher.Providers.ProteinAtlas
                         Last = doc.AuthFullNameS?.Last()
                     },
                     DOI = doc.DoiIdS,
-                    Citations = null,
                     Link = "https://hal.science/" + doc.HALId,
-                    Source = "HAL",
+                    Source = Publication.PublicationSource.HAL,
                     Date = DateOnly.TryParse(doc.ProducedDateS, out var date) ? date : null
                 };
                 publications.Add(publication);
@@ -79,6 +78,11 @@ namespace Witivio.Copilot4Researcher.Providers.ProteinAtlas
             if (query.Authors != null && query.Authors.Any())
             {
                 builder["q"] += string.Join(" ", query.Authors);
+            }
+
+            if (query.Prioritze == Prioritze.Recent)
+            {
+                builder["fq"] += " AND producedDateY_i:[" + DateTime.UtcNow.AddYears(-1).Year + " TO *]";
             }
 
             // Add sort parameter
