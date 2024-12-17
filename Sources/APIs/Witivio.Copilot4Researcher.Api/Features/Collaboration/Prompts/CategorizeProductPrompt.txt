@@ -1,0 +1,2 @@
+﻿
+For life science, Extract keywords to index it in a search engine. Just answer with the keywords separated by a comma.

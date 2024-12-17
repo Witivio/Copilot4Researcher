@@ -28,36 +28,47 @@
     <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="8.9.1" />
     <PackageReference Include="Microsoft.Graph" Version="5.62.0" />
     <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="3.3.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.8.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.1.0" />
+	  <PackageReference Include="Microsoft.KernelMemory.AI.AzureOpenAI" Version="0.93.241118.1" />
+	  <PackageReference Include="Microsoft.SemanticKernel" Version="1.30.0" />
+	  <PackageReference Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.30.0" />
+	  <PackageReference Include="PDFtoImage" Version="5.0.0-preview.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Providers\Scimago\Data\scimagojr 2023  Subject Area - Biochemistry, Genetics and Molecular Biology.csv">
+    <None Update="Features\Collaboration\Prompts\CategorizeProductPrompt.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Providers\Scimago\Data\scimagojr 2023  Subject Area - Chemistry.csv">
+    <None Update="Features\Collaboration\Prompts\ExtractProductPrompt.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Providers\Scimago\Data\scimagojr 2023  Subject Area - Computer Science.csv">
+    <None Update="Features\Literature\Scimago\Data\scimagojr 2023  Subject Area - Biochemistry, Genetics and Molecular Biology.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Providers\Scimago\Data\scimagojr 2023  Subject Area - Health Professions.csv">
+    <None Update="Features\Literature\Scimago\Data\scimagojr 2023  Subject Area - Chemistry.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Providers\Scimago\Data\scimagojr 2023  Subject Area - Immunology and Microbiology.csv">
+    <None Update="Features\Literature\Scimago\Data\scimagojr 2023  Subject Area - Computer Science.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Providers\Scimago\Data\scimagojr 2023  Subject Area - Medicine.csv">
+    <None Update="Features\Literature\Scimago\Data\scimagojr 2023  Subject Area - Health Professions.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Providers\Scimago\Data\scimagojr 2023  Subject Area - Multidisciplinary.csv">
+    <None Update="Features\Literature\Scimago\Data\scimagojr 2023  Subject Area - Immunology and Microbiology.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\Literature\Scimago\Data\scimagojr 2023  Subject Area - Medicine.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\Literature\Scimago\Data\scimagojr 2023  Subject Area - Multidisciplinary.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Providers\Scimago\Data\scimagojr 2023  Subject Area - Neuroscience.csv">
+    <None Update="Features\Literature\Scimago\Data\scimagojr 2023  Subject Area - Neuroscience.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Providers\Scimago\Data\scimagojr 2023  Subject Area - Pharmacology, Toxicology and Pharmaceutics.csv">
+    <None Update="Features\Literature\Scimago\Data\scimagojr 2023  Subject Area - Pharmacology, Toxicology and Pharmaceutics.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

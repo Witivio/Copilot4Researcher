@@ -1,0 +1,44 @@
+{
+    "$schema": "https://aka.ms/json-schemas/copilot/plugin/v2.1/schema.json",
+    "schema_version": "v2.1",
+    "name_for_human": "Collaboration 🤝",
+    "description_for_human": "An API to connect people",
+    "namespace": "copilotforresearchercollaboration",
+    "functions": [
+        {
+            "name": "SearchPeople",
+            "description": "🤝 queries internal data to know who already used a product or did an experiment",
+            "capabilities": {
+                "response_semantics": {
+                  "data_path": "$.results",
+                  "properties": {
+                    "title": "$.result.fullName",
+                    "template_selector": "$.displayTemplate"
+                  }
+                }
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "OpenApi",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "apiSpecificationFile/collaboration-plugin.yaml"
+            },
+            "run_for_functions": [
+                "SearchPeople"
+            ]
+        }
+    ],
+    "capabilities": {
+        "localization": {},
+        "conversation_starters": [
+            {
+                "text": "Search for life science literature"
+            }
+        ]
+    }
+}

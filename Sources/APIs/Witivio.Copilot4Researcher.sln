@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Witivio.Copilot4Researcher", "Witivio.Copilot4Researcher.Api\Witivio.Copilot4Researcher.csproj", "{AA95E6EF-275C-4F87-AEE6-421F0F8E5B9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Witivio.Copilot4Researcher.Tests", "Witivio.Copilot4Researcher.Tests\Witivio.Copilot4Researcher.Tests.csproj", "{DBCF960F-880B-40BA-84DA-E764A557A82D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Witivio.Copilot4Researcher.Tests", "Witivio.Copilot4Researcher.Tests\Witivio.Copilot4Researcher.Tests.csproj", "{DBCF960F-880B-40BA-84DA-E764A557A82D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

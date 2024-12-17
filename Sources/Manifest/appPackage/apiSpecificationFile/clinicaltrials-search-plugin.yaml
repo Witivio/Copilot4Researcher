@@ -1,12 +1,128 @@
 openapi: 3.0.1
 info:
   title: Copilot for Reseracher APIs
-  description: An API to search clinical trials
+  description: An API to search clinical trials and patents
   version: v1
 servers:
-  - url: https://7502c69eca89.ngrok.app
+  - url: ${{API_URL}}
     description: Production Server
 paths:
+  /Patent/Search:
+      get:
+        tags:
+          - Patent
+        summary: Search for patent
+        description: This endpoint allows users to search Patent with parameters like keywords, date ranges. The query interprets user intent, applying filters to return relevant. Users can specify their preferences, such as ''Show latest patent about cancer device,'' and the system will automatically retrieve the most relevant results.'
+        operationId: SearchPatents
+        parameters:
+          - name: UserInput
+            in: query
+            description: 'User input as a natural language query, e.g., ''Show latest patents about cancer device.'''
+            required: true
+            schema:
+              type: string
+              description: 'User input as a natural language query, e.g., ''Show latest patents about cancer device.'''
+          - name: UserIntent
+            in: query
+            description: 'User''s intent derived from the natural language input, e.g., ''search for recent patents.'''
+            required: true
+            schema:
+              type: string
+              description: 'User''s intent derived from the natural language input, e.g., ''search for recent patents.'''
+          - name: Keywords
+            in: query
+            description: 'Keywords or topics to focus the search on, extracted from the user input, separated by semicolons.'
+            required: true
+            schema:
+              type: string
+              description: 'Keywords or topics to focus the search on, extracted from the user input, separated by semicolons.'
+          - name: Countries
+            in: query
+            description: Optional. ISO 2 letters name of one or many countries separated by semicolons. Default is empty
+            schema:
+              type: string
+              description: Optional. ISO 2 letters name of one or many countries separated by semicolons. Default is empty
+          - name: Language
+            in: query
+            description: 'Optional. Language of the patent. Supported value: ENGLISH, GERMAN, CHINESE, FRENCH, SPANISH, ARABIC, JAPANESE, KOREAN, PORTUGUESE, RUSSIAN, ITALIAN, DUTCH, SWEDISH, FINNISH, NORWEGIAN, DANISH. Default is ENGLISH'
+            schema:
+              type: string
+              description: 'Optional. Language of the patent. Supported value: ENGLISH, GERMAN, CHINESE, FRENCH, SPANISH, ARABIC, JAPANESE, KOREAN, PORTUGUESE, RUSSIAN, ITALIAN, DUTCH, SWEDISH, FINNISH, NORWEGIAN, DANISH. Default is ENGLISH'
+          - name: BeforePriorityDate
+            in: query
+            description: Optional. Filter to get patent priority before a date. The format is YYYYMMDD
+            schema:
+              type: string
+              description: Optional. Filter to get patent priority before a date. The format is YYYYMMDD
+          - name: BeforeFillingDate
+            in: query
+            description: Optional. Filter to get patent filling before a date. The format is YYYYMMDD
+            schema:
+              type: string
+              description: Optional. Filter to get patent filling before a date. The format is YYYYMMDD
+          - name: BeforePublicationDate
+            in: query
+            description: Optional. Filter to get patent publication before a date. The format is YYYYMMDD
+            schema:
+              type: string
+              description: Optional. Filter to get patent publication before a date. The format is YYYYMMDD
+          - name: AfterPriorityDate
+            in: query
+            description: Optional. Filter to get patent priority after a date. The format is YYYYMMDD
+            schema:
+              type: string
+              description: Optional. Filter to get patent priority after a date. The format is YYYYMMDD
+          - name: AfterFillingDate
+            in: query
+            description: Optional. Filter to get patent filling after a date. The format is YYYYMMDD
+            schema:
+              type: string
+              description: Optional. Filter to get patent filling after a date. The format is YYYYMMDD
+          - name: AfterPublicationDate
+            in: query
+            description: Optional. Filter to get patent publication after a date. The format is YYYYMMDD
+            schema:
+              type: string
+              description: Optional. Filter to get patent publication after a date. The format is YYYYMMDD
+          - name: Inventors
+            in: query
+            description: Optional. Inventors of the patents. Separated by comma.
+            schema:
+              type: string
+              description: Optional. Inventors of the patents. Separated by comma.
+          - name: Assignees
+            in: query
+            description: Optional. Assignees  of the patents. Separated by comma.
+            schema:
+              type: string
+              description: Optional. Assignees  of the patents. Separated by comma.
+          - name: Status
+            in: query
+            description: 'Optional. Filter patent results by status. Supported value: APPLICATION, GRANT'
+            schema:
+              type: string
+              description: 'Optional. Filter patent results by status. Supported value: APPLICATION, GRANT'
+          - name: Type
+            in: query
+            description: 'Optional. Filter patent results by type. Supported value: PATENT, DESIGN'
+            schema:
+              type: string
+              description: 'Optional. Filter patent results by type. Supported value: PATENT, DESIGN'
+          - name: Litigation
+            in: query
+            description: 'Optional. Filter patent results by litigation status. Supported value: YES, NO'
+            schema:
+              type: string
+              description: 'Optional. Filter patent results by litigation status. Supported value: YES, NO'
+        responses:
+          '200':
+            description: OK
+          '400':
+            description: Bad Request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ProblemDetails'
   /ClinicalTrials/search:
     get:
       tags:

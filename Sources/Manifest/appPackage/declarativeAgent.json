@@ -5,10 +5,7 @@
     "description": "Empower your research with reliable sources",
     "instructions": "$[file('instruction.txt')]",
     "actions": [
-        {
-            "id": "gene-search",
-            "file": "gene-search-plugin.json"
-        },
+      
         {
             "id": "litterature-search",
             "file": "litterature-search-plugin.json"
@@ -18,12 +15,16 @@
             "file": "clinicaltrials-search-plugin.json"
         },
         {
-            "id": "patent-search",
-            "file": "patent-search-plugin.json"
-        },
-        {
             "id": "rewrite",
             "file": "rewrite-plugin.json"
+        },
+        {
+            "id": "gene-search",
+            "file": "gene-search-plugin.json"
+        },
+        {
+            "id": "collaboration",
+            "file": "collaboration-plugin.json"
         }
     ],
     "conversation_starters": [
@@ -43,6 +44,5 @@
             "title": "Grant Application Assistance",
             "text": "How can I get help with Copilot for Resarcher?"
         }
-
     ]
 }

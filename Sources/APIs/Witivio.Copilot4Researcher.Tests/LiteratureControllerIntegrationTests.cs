@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Witivio.Copilot4Researcher.Controllers;
-using Witivio.Copilot4Researcher.Models;
 using Microsoft.Extensions.DependencyInjection;
-using Witivio.Copilot4Researcher.Providers.Pubmed;
+using Witivio.Copilot4Researcher.Features.Literature.Pubmed;
+using Witivio.Copilot4Researcher.Features.Literature.Controllers;
+using Witivio.Copilot4Researcher.Features.Literature.Models;
 
 
 namespace Witivio.Copilot4Researcher.Tests

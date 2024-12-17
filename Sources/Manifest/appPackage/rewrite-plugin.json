@@ -13,15 +13,42 @@
                 "responding": {
                     "instructions": [
                         "Examine the output of the `TextRewrite` function.",
-                        "Extract the value of WordCount or CharacterCount from the output",
-                        "Apply the value to limit your response to the user.",
+                        "Extract the value of wordCount from the output",
+                        "Apply the value to limit the number of words of your response to the user.",
                         "Always begin your response with the limit you apply"],
-                    "description": "`TextRewrite` returns the number of words limit or number of character for rewriting"
+                    "description": "`TextRewrite` returns the number of words limit for rewriting"
                 }
             },
             "returns":{
                 "type": "string",
-                "description": "LIMIT OF NUMBER OF WORD OR CHARACTER"
+                "description": "LIMIT OF NUMBER OF WORD"
+            },
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "properties": {
+                        "title": "$.wordCount"
+                    },
+                    "static_template": {
+                        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                        "version": "1.5",
+                        "type": "AdaptiveCard",
+                        "body": [
+                            {
+                                "type": "FactSet",
+                                "facts": [
+                                    {
+                                        "title": "Journal:",
+                                        "value": "$(journalName)"
+                                    },
+                                    {
+                                        "title": "Words:",
+                                        "value": "$(wordCount)"
+                                    }
+                                ]
+                            }]
+                    }
+                }
             }
         }
     ],

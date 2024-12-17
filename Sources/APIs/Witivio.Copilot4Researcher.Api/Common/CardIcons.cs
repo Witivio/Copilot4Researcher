@@ -20,5 +20,7 @@ namespace Witivio.Copilot4Researcher.Common
         public const string DarkGreenBg = "data:image/gif;base64,R0lGODlhCAABAHAAACwAAAAACAABAIGZzP8AAAAAAAAAAAACA4RvBQA7";
         public const string YellowBg = "data:image/gif;base64,R0lGODlhCAABAHAAACwAAAAACAABAIH/wQAAAAAAAAAAAAACA4RvBQA7";
         public const string BrownishBg = "data:image/gif;base64,R0lGODlhCAABAHAAACwAAAAACAABAIGZzP8AAAAAAAAAAAACA4RvBQA7";
+
+        public const string GreyBg = "data:image/gif;base64,R0lGODlhCAABAHAAACwAAAAACAABAIGgoKAAAAAAAAAAAAACA4RvBQA7";
     }
 }

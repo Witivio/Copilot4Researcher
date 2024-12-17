@@ -1,0 +1,17 @@
+{
+    "api": {
+        "requestedAccessTokenVersion": 2,
+        "oauth2PermissionScopes": [
+            {
+                "adminConsentDescription": "Consentement",
+                "adminConsentDisplayName": "Consentement",
+                "id": "d19a9dfe-37b0-48a4-bfcc-9b80b09fcd9a",
+                "isEnabled": true,
+                "type": "Admin",
+                "userConsentDescription": null,
+                "userConsentDisplayName": null,
+                "value": "access_as_user"
+            }
+        ]
+    }
+}

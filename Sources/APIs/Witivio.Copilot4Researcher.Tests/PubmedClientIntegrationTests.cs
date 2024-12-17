@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Witivio.Copilot4Researcher.Features.Literature.Pubmed;
 using Witivio.Copilot4Researcher.Models;
-using Witivio.Copilot4Researcher.Providers.Pubmed;
 using Xunit;
 
 namespace Witivio.Copilot4Researcher.Tests

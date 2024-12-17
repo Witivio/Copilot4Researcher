@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  title: Copilot for Researcher APIs
+  description: APIs for Copilot for Researcher
+  version: v1
+servers:
+  - url: ${{API_URL}}
+    description: Production Server
+paths:
+  /api/Collaboration/search:
+    get:
+      tags:
+        - Collaboration
+      summary: Search for people
+      description: Search for people or request help regarding specific scientific products, protocols, or experiments. Use this function to find users who have experience with specific tools, reagents, or methods, such as antibodies, enzymes, or techniques like Western blotting.
+      operationId: SearchPeople
+      parameters:
+        - name: userInput
+          in: query
+          required: true
+          description: User input as a natural language query, e.g., "Who does western blots?"
+          schema:
+            type: string
+            description: User input as a natural language query, e.g., "Who does western blots?"
+        - name: userIntent
+          in: query
+          required: true
+          description: User's intent derived from the natural language input, e.g., "search for people."
+          schema:
+            type: string
+            description: User input as a natural language query, e.g., "Who does western blots?"
+        - name: keywords
+          in: query
+          required: true
+          description: Keywords to search in the product database. Exclude action words. Correct spelling if needed. Translate keywords into English. Separate by semicolons.
+          schema:
+            type: string
+            description: User input as a natural language query, e.g., "Who does western blots?"
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: { }
