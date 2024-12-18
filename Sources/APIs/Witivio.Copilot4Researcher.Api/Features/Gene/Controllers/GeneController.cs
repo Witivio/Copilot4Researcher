@@ -50,7 +50,7 @@ namespace Witivio.Copilot4Researcher.Features.Gene.Controllers
             var cardTemplates = new CopilotResultTemplates();
             cardTemplates.AddCard("card", GeneCardRenderer.Render(geneResult));
 
-            var resultWrapper = new CopilotRenderingResultWrapper<Gene>();
+            var resultWrapper = new CopilotRenderingResultWrapper<Models.Gene>();
             resultWrapper.Templates = cardTemplates;
             resultWrapper.Result = geneResult;
             resultWrapper.DisplayTemplate = "$.templates.card";

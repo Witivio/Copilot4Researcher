@@ -198,11 +198,13 @@ namespace Witivio.Copilot4Researcher.Features.Literature.Pubmed
             if (query.MinDate.HasValue)
             {
                 builder["mindate"] = query.MinDate.Value.ToString("yyyy/MM/dd");
+                builder["maxdate"] = DateTime.UtcNow.ToString("yyyy/MM/dd");
             }
 
 
             if (query.MaxDate.HasValue)
             {
+                builder["mindate"] = "1900";
                 builder["maxdate"] = query.MaxDate.Value.ToString("yyyy/MM/dd");
             }
 
@@ -215,6 +217,7 @@ namespace Witivio.Copilot4Researcher.Features.Literature.Pubmed
             if (query.Prioritze == Prioritze.Recent)
             {
                 builder["mindate"] = DateTime.UtcNow.AddYears(-1).ToString("yyyy/MM/dd");
+                builder["maxdate"] = DateTime.UtcNow.ToString("yyyy/MM/dd");
             }
 
 
