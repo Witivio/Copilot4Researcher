@@ -1,6 +1,6 @@
 # 🚀 Copilot for Researcher - Life Sciences Edition 🌿🔬
 
-Welcome to **Copilot for Researcher**, an intelligent assistant designed to streamline research workflows, with a particular focus on **life sciences**. Our v1 release will debut in **December 2024**, and we’re excited to share how this tool will transform how researchers gather and interact with scientific data.
+Welcome to **Copilot for Researcher**, an intelligent assistant designed to streamline research workflows, with a particular focus on **life sciences**. Our code is now released, and we’re excited to share how this tool will transform how researchers gather and interact with scientific data.
 
 ## What is Copilot for Researcher? 🤔
 
@@ -22,11 +22,13 @@ For more details about Copilot agents, check out the official [Microsoft Copilot
 
 ## Getting Started 🚀
 
-Once we launch in **December 2024**, setting up Copilot for Researcher will be simple:
+The setup documentation is available at **[infrastructure/readme.md](infrastructure/readme.md)**.
 
 1. **⚙️ Installation**: Deploy the Copilot agent on Azure using our pre-configured templates.
-2. **🔗 Configure Data Sources**: Select and configure the data sources you want Copilot to monitor.
+2. **🔗 Build the app package**: Build the app package with Teams Tool kit.
 3. **🧑‍🔬 Start Exploring**: Use the intuitive card system to interact with your research data and get actionable insights.
+
+A full demo is available here: [Watch on YouTube](https://youtu.be/HfRCvVaDwQ0) 🎥.
 
 ## Roadmap 🛤️
 
@@ -36,9 +38,9 @@ This is just the beginning! The initial release of Copilot for Researcher will f
 
 We welcome contributions from the community! If you'd like to contribute to the project or suggest new features, please check out our [contribution guidelines](CONTRIBUTING.md).
 
-
 ---
 
 Feel free to [open an issue](https://github.com/Witivio/Copilot4Researcher/issues) for any questions or suggestions.
 
 We can’t wait to see how **Copilot for Researcher** helps you in your scientific endeavors! 🌟🔬
+

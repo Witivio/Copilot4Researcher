@@ -1,0 +1,62 @@
+name: 1.$(date:yy).$(date:MM).$(Build.BuildId)
+
+trigger:
+  branches:
+    include:
+      - InstitutCurie
+    exclude:
+      - feature/*
+      - user/*
+
+
+variables:
+  - name: buildPlatform
+    value: "Any CPU"
+  - name: buildConfiguration
+    value: "Release"
+  - name: ServiceConnectionName
+    ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+      value: "CopilotForResearcher - int"
+    ${{ elseif startswith(variables['Build.SourceBranch'], 'refs/heads/InstitutCurie') }}:
+      value: "CopilotForResearcher - prd"
+    ${{ else }}:
+      value: "CopilotForResearcher - int"
+  - name: ResourceGroup
+    ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+      value: "cfr-int"
+    ${{ elseif startswith(variables['Build.SourceBranch'], 'refs/heads/InstitutCurie') }}:
+      value: "cfr-prd"
+    ${{ else }}:
+      value: "cfr-int"
+  - name: Prefix
+    value: "cfr"
+  - name: Environment
+    ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+      value: "int"
+    ${{ elseif startswith(variables['Build.SourceBranch'], 'refs/heads/InstitutCurie') }}:
+      value: "prd"
+    ${{ else }}:
+      value: "dev"
+  - name: SlotName
+    ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+      value: "production"
+    ${{ elseif startswith(variables['Build.SourceBranch'], 'refs/heads/InstitutCurie') }}:
+      value: "preprod"
+    ${{ else }}:
+      value: "production"
+  - name: serviceName
+    ${{ if startswith(variables['Build.SourceBranch'], 'refs/heads/InstitutCurie') }}:
+      value: prd-preprod
+    ${{ else }}:
+      value: int
+
+stages:
+  - stage: Deploy_Infrastructure
+    displayName: "🚀 Deploy infrastructure"
+    jobs:
+      - template: templates/deploy-infrastructure.yaml
+        parameters:
+          environment: ${{ variables.Environment }}
+          resourceGroupName: ${{ variables.ResourceGroup }}
+          serviceConnectionName: ${{ variables.ServiceConnectionName }}
+          keyVaultName: "cfr-master-kv"

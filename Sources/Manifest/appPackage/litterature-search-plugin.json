@@ -1,0 +1,52 @@
+{
+    "$schema": "https://aka.ms/json-schemas/copilot/plugin/v2.1/schema.json",
+    "schema_version": "v2.1",
+    "name_for_human": "Litterature search 🔎",
+    "description_for_human": "An API to search literature",
+    "namespace": "copilotforresearcher",
+    "functions": [
+        {
+            "name": "SearchLiterature",
+            "states": {
+                "responding": {
+                    "instructions": ["You must use the abstract and title fields"],
+                    "description": "",
+                    "examples": ""
+                }
+            },
+            "description": "📚 queries life science databases such as PubMed, and other academic journal repositories to retrieve relevant articles, papers, and research studies. It is designed to support users searching for specific genes, proteins, molecular interactions, or any other life science-related queries. The function can return a list of articles, abstracts, or even full-texts where available, with links to the original publications",
+            "capabilities": {
+                "response_semantics": {
+                 "data_path": "$.results",
+                  "properties": {
+                    "title": "$.result.title",
+                    "url":"$.link",
+                    "template_selector": "$.displayTemplate"
+                  }
+                }
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "OpenApi",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "apiSpecificationFile/litterature-search-plugin.yaml"
+            },
+            "run_for_functions": [
+                "SearchLiterature"
+            ]
+        }
+    ],
+    "capabilities": {
+        "localization": {},
+        "conversation_starters": [
+            {
+                "text": "Search for life science literature"
+            }
+        ]
+    }
+}

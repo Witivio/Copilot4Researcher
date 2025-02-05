@@ -1,0 +1,49 @@
+parameters:
+  - name: environment
+    type: string
+  - name: resourceGroupName
+    type: string
+  - name: serviceConnectionName
+    type: string
+  - name: keyVaultName
+    type: string
+
+jobs: 
+  - job: Deploy_${{ parameters.environment }}_Infrastructure
+    displayName: "🚀 Deploy infrastructure [${{ parameters.environment }}]"
+    pool:
+      name: OnPrem
+    steps:
+      - checkout: self
+        displayName: "📂 Checkout Git repo"
+        fetchDepth: 0
+
+      - task: AzureKeyVault@2
+        displayName: 🔑 Get secrets from key vault
+        inputs:
+          azureSubscription: ${{ parameters.serviceConnectionName }}
+          KeyVaultName: ${{ parameters.keyVaultName }}
+          RunAsPreJob: false 
+
+      - task: PowerShell@2
+        displayName: 💽 Create bicepparam file
+        inputs:
+          targetType: inline
+          script: | 
+            Write-Output "Creating bicep parameter file"
+            Write-Output $env:BICEP_PARAM
+            $env:BICEP_PARAM > "./devops/production-resources/parameters.json"
+        env:
+          BICEP_PARAM: $(cfr-bicepparam-${{ parameters.environment }})
+
+      - task: AzureCLI@2
+        displayName: "🚀 Deploy infrastructure"
+        inputs:
+          azureSubscription: ${{ parameters.serviceConnectionName }}
+          scriptType: ps
+          scriptLocation: inlineScript
+          useGlobalConfig: false
+          inlineScript: |
+            Write-Output (Get-Content "./devops/production-resources/parameters.json")
+            az --version
+            az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file ./devops/production-resources/deploy-teamspro.bicep --parameters $(System.DefaultWorkingDirectory)/devops/production-resources/parameters.json

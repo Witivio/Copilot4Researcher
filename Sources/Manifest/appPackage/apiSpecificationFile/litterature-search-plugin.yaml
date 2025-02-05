@@ -1,0 +1,101 @@
+openapi: 3.0.1
+info:
+  title: Copilot for Reseracher APIs
+  description: An API to search literature through PubMed
+  version: v1
+servers:
+  - url: ${{API_URL}}
+    description: Production Server
+paths:
+  /Literature/Search:
+    get:
+      tags:
+        - Literature
+      summary: Search for life science literature
+      description: 'Search for life science research articles with parameters like keywords, date ranges, and authors. The query interprets user intent, applying filters to return relevant, high-quality articles from databases like PubMed and BioRxiv. Users can specify their preferences, such as ''Show latest articles about BRCA1,'' and the system will automatically retrieve the most relevant results.'
+      operationId: SearchLiterature
+      parameters:
+        - name: UserInput
+          in: query
+          description: 'User input as a natural language query, e.g., ''Show latest articles about BRCA1.'''
+          required: true
+          schema:
+            type: string
+            description: 'User input as a natural language query, e.g., ''Show latest articles about BRCA1.'''
+        - name: UserIntent
+          in: query
+          description: 'User''s intent derived from the natural language input, e.g., ''search for recent studies.'''
+          required: true
+          schema:
+            type: string
+            description: 'User''s intent derived from the natural language input, e.g., ''search for recent studies.'''
+        - name: Keywords
+          in: query
+          description: 'Keywords or topics to focus the search on, extracted from the user input, separated by semicolons , e.g., BRCA1;genetic mutations.'
+          required: true
+          schema:
+            type: string
+            description: 'Keywords or topics to focus the search on, extracted from the user input, separated by semicolons , e.g., BRCA1;genetic mutations.'
+        - name: MinDate
+          in: query
+          description: Optional. Minimum publication date to filter the search results. Default value is null.
+          schema:
+            type: string
+            description: Optional. Minimum publication date to filter the search results. Default value is null.
+            format: date-time
+        - name: MaxDate
+          in: query
+          description: Optional. Maximum publication date to filter the search results. Default value is null.
+          schema:
+            type: string
+            description: Optional. Maximum publication date to filter the search results. Default value is null.
+            format: date-time
+        - name: Authors
+          in: query
+          description: 'Optional Array of author names to narrow the search, separated by semicolons, e.g., John Doe;Jane Smith. Default value is null.'
+          schema:
+            type: string
+            description: 'Optional Array of author names to narrow the search, separated by semicolons, e.g., John Doe;Jane Smith. Default value is null.'
+        - name: NbItems
+          in: query
+          description: 'Optional. Number of items to return. Default value is 5'
+          schema:
+            type: integer
+            description: 'Optional. Number of items to return. Default value is 5'
+        - name: Prioritze
+          in: query
+          description: 'Optional. Whether to prioritize recent articles. Possible values: Recent or None. Default value is None. Example: What is the latest articles about X => the value is Recent'
+          schema:
+            type: string
+            description: 'Optional. Whether to prioritize recent articles. Possible values: Recent or None. Default value is null. Example: What is the latest articles about X => the value is Recent'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: { }

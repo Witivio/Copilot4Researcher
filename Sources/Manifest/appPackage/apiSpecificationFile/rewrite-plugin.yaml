@@ -1,0 +1,68 @@
+openapi: 3.0.1
+info:
+  title: Copilot for Reseracher APIs
+  description: An API to search literature through PubMed
+  version: v1
+servers:
+  - url: ${{API_URL}}
+    description: Production Server
+paths:
+  /api/TextRewrite:
+  
+    get:
+      tags:
+        - TextRew
+      summary: Rewrite
+      description: This endpoint allows users to rewrite or adapt text for a specific journal
+      operationId: TextRewrite
+      parameters:
+        - name: journalName
+          in: query
+          description: 'name of the life sience journal'
+          required: true
+          schema:
+            type: string
+            description: 'name of the life sience journal'
+        - name: textType
+          in: query
+          description: 'Optionnal. Type of the text to rewrite. Possible value: Abstract, Introduction, Discussion. Default value: Abstract'
+          required: false
+          schema:
+            type: string
+            description: 'Optionnal. Type of the text to rewrite. Possible value: Abstract, Introduction, Discussion. Default value: Abstract'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+     
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: {}

@@ -1,0 +1,54 @@
+{
+    "$schema": "https://aka.ms/json-schemas/copilot/plugin/v2.1/schema.json",
+    "schema_version": "v2.1",
+    "name_for_human": "Patents search 🔎",
+    "description_for_human": "An API to search patents",
+    "namespace": "copilotforresearcherpatents",
+    "functions": [
+        {
+            "name": "SearchPatents",
+            "states": {
+                "responding": {
+                    "instructions": ["You must only use the summary and the Title"],
+                    "description": "",
+                    "examples": ""
+                }
+            },
+            "description": "📚 queries Google patent to learn about patents from around the world",
+            "capabilities": {
+                "response_semantics": {
+                  "data_path": "$.results",
+                  "properties": {
+                    "title": "$.result.title",
+                    "subtitle": "$.result.wipo",
+                    "url":"$.result.pdfUrl",
+                    "template_selector": "$.displayTemplate"
+                  }
+                 
+                }
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "OpenApi",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "apiSpecificationFile/patent-search-plugin.yaml"
+            },
+            "run_for_functions": [
+                "SearchPatents"
+            ]
+        }
+    ],
+    "capabilities": {
+        "localization": {},
+        "conversation_starters": [
+            {
+                "text": "Search for life science literature"
+            }
+        ]
+    }
+}

@@ -1,0 +1,48 @@
+{
+    "$schema": "https://aka.ms/json-schemas/copilot/declarative-agent/v1.0/schema.json",
+    "version": "v1.0",
+    "name": "Copilot for Researcher",
+    "description": "Empower your research with reliable sources",
+    "instructions": "$[file('instruction.txt')]",
+    "actions": [
+      
+        {
+            "id": "litterature-search",
+            "file": "litterature-search-plugin.json"
+        },
+        {
+            "id": "clinicaltrials-search",
+            "file": "clinicaltrials-search-plugin.json"
+        },
+        {
+            "id": "rewrite",
+            "file": "rewrite-plugin.json"
+        },
+        {
+            "id": "gene-search",
+            "file": "gene-search-plugin.json"
+        },
+        {
+            "id": "collaboration",
+            "file": "collaboration-plugin.json"
+        }
+    ],
+    "conversation_starters": [
+        {
+            "title": "Research Monitoring",
+            "text": "Staying updated with the latest research can be cha"
+        },
+        {
+            "title": "Collaborate with others",
+            "text": "How can I get help with Copilot for Resarcher?"
+        },
+        {
+            "title": "Article Review Assistance",
+            "text": "How can I get help with Copilot for Resarcher?"
+        },
+        {
+            "title": "Grant Application Assistance",
+            "text": "How can I get help with Copilot for Resarcher?"
+        }
+    ]
+}

@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Sources/Manifest/env/.env.dev
+/Sources/APIs/Witivio.Copilot4Researcher.Api/Properties/ServiceDependencies/copilot-curie-test - Zip Deploy1/profile.arm.json
+/Sources/APIs/Witivio.Copilot4Researcher.Api/Properties/launchSettings.json

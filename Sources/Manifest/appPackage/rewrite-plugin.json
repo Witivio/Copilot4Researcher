@@ -1,0 +1,78 @@
+{
+    "$schema": "https://aka.ms/json-schemas/copilot/plugin/v2.1/schema.json",
+    "schema_version": "v2.1",
+    "name_for_human": "Text rewrite 📝",
+    "logo_url":"https://www.proteinatlas.org/images_static/favicon-32x32.png",
+    "description_for_human": "An API to search gene or protein",
+    "namespace": "rewritecopilotforresearcher",
+    "functions": [
+        {
+            "name": "TextRewrite",  
+            "description": "Rewrites your abstract or grant 📝",
+            "states": {
+                "responding": {
+                    "instructions": [
+                        "Examine the output of the `TextRewrite` function.",
+                        "Extract the value of wordCount from the output",
+                        "Apply the value to limit the number of words of your response to the user.",
+                        "Always begin your response with the limit you apply"],
+                    "description": "`TextRewrite` returns the number of words limit for rewriting"
+                }
+            },
+            "returns":{
+                "type": "string",
+                "description": "LIMIT OF NUMBER OF WORD"
+            },
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "properties": {
+                        "title": "$.wordCount"
+                    },
+                    "static_template": {
+                        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                        "version": "1.5",
+                        "type": "AdaptiveCard",
+                        "body": [
+                            {
+                                "type": "FactSet",
+                                "facts": [
+                                    {
+                                        "title": "Journal:",
+                                        "value": "$(journalName)"
+                                    },
+                                    {
+                                        "title": "Words:",
+                                        "value": "$(wordCount)"
+                                    }
+                                ]
+                            }]
+                    }
+                }
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "OpenApi",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "apiSpecificationFile/rewrite-plugin.yaml",
+                "progress_style": "ShowUsageWithInput"
+            },
+            "run_for_functions": [
+                "TextRewrite"
+            ]
+        }
+    ],
+    "capabilities": {
+        "localization": {},
+        "conversation_starters": [
+            {
+                "text": "Search for life science literature"
+            }
+        ]
+    }
+}
