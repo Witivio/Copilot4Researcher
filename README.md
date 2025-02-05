@@ -22,7 +22,7 @@ For more details about Copilot agents, check out the official [Microsoft Copilot
 
 ## Getting Started 🚀
 
-The setup documentation is available at **[https://github.com/Witivio/Copilot4Researcher/tree/main/Sources/Infrastructure](sources/infrastructure/readme.md)**.
+The setup documentation is available at **[Watch the infra](https://github.com/Witivio/Copilot4Researcher/blob/main/Sources/Infrastructure/README.md)**.
 
 1. **⚙️ Installation**: Deploy the Copilot agent on Azure using our pre-configured templates.
 2. **🔗 Build the app package**: Build the app package with Teams Tool kit.
